@@ -1,17 +1,15 @@
 import './App.css';
 import DashboardLayoutBasic from './components/SideNavigation/sideNavBar';
-<<<<<<< Updated upstream
-//import sideBar from './components/SampleNavBar/sideBar';
-=======
 import Notification from './components/SideNavigation/Notification';
+import BasicCard from './components/ErrorPage/BaiscCard';
+import ErrorPage from './components/ErrorPage/ErrorPage';
 
->>>>>>> Stashed changes
 
 function App() {
   return (
     <>
+      <ErrorPage/>
       <DashboardLayoutBasic/>
-      
     </>
   );
 }

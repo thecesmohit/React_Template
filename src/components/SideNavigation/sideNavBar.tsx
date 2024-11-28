@@ -3,34 +3,15 @@ import { extendTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
-<<<<<<< Updated upstream
-import { AppProvider, Navigation, Router} from '@toolpad/core/AppProvider';
-import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-=======
-import LayersIcon from '@mui/icons-material/Layers';
 import { AppProvider, Navigation,type Session, Router } from '@toolpad/core/AppProvider';
-import {ThemeSwitcher,type SidebarFooterProps, DashboardLayout } from '@toolpad/core/DashboardLayout';
+import {type SidebarFooterProps, DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { PageContainer } from '@toolpad/core/PageContainer';
-import Grid from '@mui/material/Grid2';
-import Notification from './Notification';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-import SearchIcon from '@mui/icons-material/Search';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { createTheme, useColorScheme } from '@mui/material/styles';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import Popover from '@mui/material/Popover';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import CustomToolbarActions from './CustomToolbarActions';
 
->>>>>>> Stashed changes
+import CustomToolbarActions from './CustomToolbarActions';
+import { Button } from '@mui/material';
+import BasicCard from '../ErrorPage/BaiscCard';
+import { Outlet } from 'react-router';
+
 
 
 const NAVIGATION: Navigation = [
@@ -47,6 +28,11 @@ const NAVIGATION: Navigation = [
 //     kind: 'header',
 //     title: 'Analytics',
 //   },
+  {
+    segment: 'Card',
+    title: 'Card',
+    icon: <DashboardIcon />,
+  },
   {
     segment: 'screen2',
     title: 'Screen2',
@@ -127,19 +113,19 @@ export default function DashboardLayoutBasic(props: any) {
     };
   }, []);
      
-  function SidebarFooter({ mini }: SidebarFooterProps) {
-    return (
-      <Typography
-        variant="caption"
-        sx={{ m: 1, whiteSpace: 'nowrap', overflow: 'hidden' }}
-      >
-        {mini ? '© MUI' : `© ${new Date().getFullYear()} Made with love by MUI`}
-      </Typography>
-    );
-  }
+  // function SidebarFooter({ mini }: SidebarFooterProps) {
+  //   return (
+  //     <Typography
+  //       variant="caption"
+  //       sx={{ m: 1, whiteSpace: 'nowrap', overflow: 'hidden' }}
+  //     >
+  //       {mini ? '© MUI' : `© ${new Date().getFullYear()} Made with love by MUI`}
+  //     </Typography>
+  //   );
+  // }
   return (
     <AppProvider
-    session={session}
+      session={session}
       authentication={authentication}
       navigation={NAVIGATION}
       branding={{
@@ -163,60 +149,18 @@ export default function DashboardLayoutBasic(props: any) {
         </div>),
         title: 'Generic Template',
       }}
-      router={router}
+      //router={router}
       theme={demoTheme}
       window={demoWindow}
     >
-<<<<<<< Updated upstream
-      <DashboardLayout>
-=======
       {/* <Notification /> */}
       <DashboardLayout pathname={router.pathname}
-      slots={{
-        toolbarActions: CustomToolbarActions,
-        sidebarFooter: SidebarFooter,
-      }}
+        slots={{
+          toolbarActions: CustomToolbarActions,
+          //sidebarFooter: SidebarFooter,
+        }}
       >
-      
-        {/* <PageContainer>
-          <Grid container spacing={1}>
-            <Grid size={5} />
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-            <Grid size={4}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={8}>
-              <Skeleton height={100} />
-            </Grid>
-
-            <Grid size={12}>
-              <Skeleton height={150} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-          </Grid>
-        </PageContainer> */}
-        
->>>>>>> Stashed changes
+        <Outlet/>
       </DashboardLayout>
     </AppProvider>
   );
