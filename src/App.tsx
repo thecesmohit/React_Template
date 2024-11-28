@@ -1,8 +1,6 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import DashboardLayoutBasic from './components/SideNavigation/sideNavBar';
-
+//import sideBar from './components/SampleNavBar/sideBar';
 
 function App() {
   return (

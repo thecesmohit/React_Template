@@ -1,58 +1,41 @@
 import * as React from 'react';
-import { extendTheme, styled } from '@mui/material/styles';
+import { extendTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
-import LayersIcon from '@mui/icons-material/Layers';
-import { AppProvider, Navigation, Router } from '@toolpad/core/AppProvider';
+import { AppProvider, Navigation, Router} from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-import { PageContainer } from '@toolpad/core/PageContainer';
-import Grid from '@mui/material/Grid2';
 
 const NAVIGATION: Navigation = [
-  {
-    kind: 'header',
-    title: 'Main items',
-  },
+//   {
+//     kind: 'header',
+//     title: 'Main items',
+//   },
   {
     segment: 'dashboard',
     title: 'Dashboard',
     icon: <DashboardIcon />,
   },
+//   {
+//     kind: 'header',
+//     title: 'Analytics',
+//   },
   {
-    segment: 'orders',
-    title: 'Orders',
-    icon: <ShoppingCartIcon />,
-  },
-  {
-    kind: 'divider',
-  },
-  {
-    kind: 'header',
-    title: 'Analytics',
-  },
-  {
-    segment: 'reports',
-    title: 'Reports',
+    segment: 'screen2',
+    title: 'Screen2',
     icon: <BarChartIcon />,
     children: [
       {
-        segment: 'sales',
-        title: 'Sales',
+        segment: 'leave',
+        title: 'Leave',
         icon: <DescriptionIcon />,
       },
       {
-        segment: 'traffic',
-        title: 'Traffic',
+        segment: 'vaccation',
+        title: 'Vaccation',
         icon: <DescriptionIcon />,
       },
     ],
-  },
-  {
-    segment: 'integrations',
-    title: 'Integrations',
-    icon: <LayersIcon />,
   },
 ];
 
@@ -84,67 +67,63 @@ function useDemoRouter(initialPath: string): Router {
   return router;
 }
 
-const Skeleton = styled('div')<{ height: number }>(({ theme, height }) => ({
-  backgroundColor: theme.palette.action.hover,
-  borderRadius: theme.shape.borderRadius,
-  height,
-  content: '" "',
-}));
 
 export default function DashboardLayoutBasic(props: any) {
   const { window } = props;
 
   const router = useDemoRouter('/dashboard');
-
+  
   // Remove this const when copying and pasting into your project.
   const demoWindow = window ? window() : undefined;
 
   return (
     <AppProvider
       navigation={NAVIGATION}
+      branding={{
+        logo: <DescriptionIcon />,//<img src="https://mui.com/static/logo.png" alt="MUI logo" />,
+        title: 'Generic Template',
+      }}
       router={router}
       theme={demoTheme}
       window={demoWindow}
     >
       <DashboardLayout>
-        <PageContainer>
-          <Grid container spacing={1}>
-            <Grid size={5} />
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-            <Grid size={4}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={8}>
-              <Skeleton height={100} />
-            </Grid>
-
-            <Grid size={12}>
-              <Skeleton height={150} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-          </Grid>
-        </PageContainer>
       </DashboardLayout>
     </AppProvider>
   );
 }
+
+/**
+ <MuiBox sx={{ display: "flex", minHeight: "100vh" }}>
+        <AppBar position="fixed" >
+            <MuiToolbar
+            variant="dense"
+            //className="tw-bg-slate-800"
+            style={{ "padding": "8", "backgroundColor": "white"}}
+            >
+            <MuiIconButton
+                color="inherit"
+                aria-label="open drawer"
+                //onClick={handleDrawerOpen}
+                edge="start"
+                sx={{ ml: 0.2 }}
+            >
+                <MenuIcon style={{"color":"black"}}/>
+            </MuiIconButton>
+            <MuiTypography variant="h6" style={{ flexGrow: 1 }}>
+                <img
+                alt="Logo"
+                style={{ height: "12px", marginRight: "8px" }}
+                />
+            </MuiTypography>
+            <MuiBox sx={{ display: "flex" }}>
+                <Notification path={location.pathname} />
+                <MuiIconButton disabled>
+                    <AccountCircle/>
+                </MuiIconButton>
+            </MuiBox>
+            </MuiToolbar>
+        </AppBar>
+    </MuiBox>
+    
+ */
