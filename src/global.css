@@ -1,0 +1,6 @@
+.MuiPopper-root {
+  left: auto !important;  /* Remove left positioning */
+  right: 0px !important;  /* Add right positioning to align with the right corner */
+  top: auto !important;   /* Let Popper decide the vertical position */
+  position: fixed !important; /* Ensure the popper maintains a fixed position */
+}

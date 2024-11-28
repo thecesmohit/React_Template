@@ -1,11 +1,7 @@
 import './App.css';
-import DashboardLayoutBasic from './components/SideNavigation/sideNavBar';
-<<<<<<< Updated upstream
+import DashboardLayoutBasic from './components/SideNavigation/SideNavBar';
 //import sideBar from './components/SampleNavBar/sideBar';
-=======
-import Notification from './components/SideNavigation/Notification';
 
->>>>>>> Stashed changes
 
 function App() {
   return (

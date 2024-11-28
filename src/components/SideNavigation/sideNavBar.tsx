@@ -3,16 +3,11 @@ import { extendTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
-<<<<<<< Updated upstream
-import { AppProvider, Navigation, Router} from '@toolpad/core/AppProvider';
-import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-=======
 import LayersIcon from '@mui/icons-material/Layers';
 import { AppProvider, Navigation,type Session, Router } from '@toolpad/core/AppProvider';
 import {ThemeSwitcher,type SidebarFooterProps, DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { PageContainer } from '@toolpad/core/PageContainer';
 import Grid from '@mui/material/Grid2';
-import Notification from './Notification';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
@@ -30,7 +25,6 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import CustomToolbarActions from './CustomToolbarActions';
 
->>>>>>> Stashed changes
 
 const NAVIGATION: Navigation = [
 //   {
@@ -149,10 +143,7 @@ export default function DashboardLayoutBasic(props: any) {
       theme={demoTheme}
       window={demoWindow}
     >
-<<<<<<< Updated upstream
-      <DashboardLayout>
-=======
-      {/* <Notification /> */}
+    
       <DashboardLayout pathname={router.pathname}
       slots={{
         toolbarActions: CustomToolbarActions,
@@ -160,81 +151,10 @@ export default function DashboardLayoutBasic(props: any) {
       }}
       >
       
-        {/* <PageContainer>
-          <Grid container spacing={1}>
-            <Grid size={5} />
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-            <Grid size={4}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={8}>
-              <Skeleton height={100} />
-            </Grid>
-
-            <Grid size={12}>
-              <Skeleton height={150} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-          </Grid>
-        </PageContainer> */}
-        
->>>>>>> Stashed changes
-      </DashboardLayout>
+                   </DashboardLayout>
     </AppProvider>
   );
 }
 
-/**
- <MuiBox sx={{ display: "flex", minHeight: "100vh" }}>
-        <AppBar position="fixed" >
-            <MuiToolbar
-            variant="dense"
-            //className="tw-bg-slate-800"
-            style={{ "padding": "8", "backgroundColor": "white"}}
-            >
-            <MuiIconButton
-                color="inherit"
-                aria-label="open drawer"
-                //onClick={handleDrawerOpen}
-                edge="start"
-                sx={{ ml: 0.2 }}
-            >
-                <MenuIcon style={{"color":"black"}}/>
-            </MuiIconButton>
-            <MuiTypography variant="h6" style={{ flexGrow: 1 }}>
-                <img
-                alt="Logo"
-                style={{ height: "12px", marginRight: "8px" }}
-                />
-            </MuiTypography>
-            <MuiBox sx={{ display: "flex" }}>
-                <Notification path={location.pathname} />
-                <MuiIconButton disabled>
-                    <AccountCircle/>
-                </MuiIconButton>
-            </MuiBox>
-            </MuiToolbar>
-        </AppBar>
-    </MuiBox>
-    
- */
+
+ 
