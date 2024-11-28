@@ -6,6 +6,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import { AppProvider, Navigation, Router} from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 
+
 const NAVIGATION: Navigation = [
 //   {
 //     kind: 'header',
@@ -80,7 +81,24 @@ export default function DashboardLayoutBasic(props: any) {
     <AppProvider
       navigation={NAVIGATION}
       branding={{
-        logo: <DescriptionIcon />,//<img src="https://mui.com/static/logo.png" alt="MUI logo" />,
+        logo: (<div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%", // Adjust as needed
+            height: "100%", // Adjust as needed
+          }}
+        >
+          <img
+            src="GenericTemplateLogo.jpg"
+            alt="Gen logo"
+            style={{
+              width:"30px",
+              height:"30px",
+            }}
+          />
+        </div>),
         title: 'Generic Template',
       }}
       router={router}
@@ -125,5 +143,4 @@ export default function DashboardLayoutBasic(props: any) {
             </MuiToolbar>
         </AppBar>
     </MuiBox>
-    
  */
