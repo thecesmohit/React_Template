@@ -4,8 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import BasicCard from './components/ErrorPage/BaiscCard';
-import Dashboard from './components/Dashboard/Dashboard';
+
 
 
 const root = ReactDOM.createRoot(
@@ -16,12 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<App />}>
-          <Route path='dashboard' element={<Dashboard/>}/>
-          <Route path='/card' element={<BasicCard/>}/>
-        </Route>
-      </Routes>
+      <App/>
     </BrowserRouter>
     
   </React.StrictMode>

@@ -1,10 +1,11 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import * as React from "react"
 
 export default function Dashboard(){
     return(
         <>
-           <TextField>Welcome to Generic Template Dashboard</TextField>
+           <Typography variant="h1" component="h2">
+           Welcome to Generic Template Dashboard</Typography>
         </>
     );
 }
