@@ -89,25 +89,17 @@ const Notification: React.FC<NotificationProps> = () => {
       </IconButton>
       <Popper
         open={open}
-         placement="bottom-end"
+        placement={matchesXs ? 'bottom' : 'bottom-end'}
         anchorEl={anchorRef.current}
         role={undefined}
         transition
         disablePortal
-        popperOptions={{
-          modifiers: [
-            {
-              name: 'offset',
-              options: {
-                offset: [0, 10], // Adjust offset to control the spacing between icon and Popper
-              },
-            },
-          ],
-        }}
+        sx={{p:2}}
+        popperOptions={{ modifiers: [{ name: 'offset', options: { offset: [matchesXs ? -5 : 0, 9] } }] }}
       >
         {(TransitionProps) => (
           <Transitions type="grow" position={matchesXs ? 'top' : 'top-right'} in={open} {...TransitionProps}>
-            <Paper sx={{ boxShadow: theme.shadows[1], width: '100%', minWidth: 285, maxWidth: { xs: 285, md: 420 } }}>
+            <Paper sx={{ boxShadow: theme.shadows[1],  width: '100%', minWidth: 285, maxWidth: { xs: 285, md: 420 } }}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MainCard
                   title="Notification"
@@ -146,7 +138,7 @@ const Notification: React.FC<NotificationProps> = () => {
                       </ListItemAvatar>
                       <ListItemText
                         primary={
-                          <Typography variant="h6">
+                          <Typography variant="subtitle1">
                             It&apos;s{' '}
                             <Typography component="span" variant="subtitle1">
                               Cristina danny&apos;s
@@ -167,7 +159,7 @@ const Notification: React.FC<NotificationProps> = () => {
                       </ListItemAvatar>
                       <ListItemText
                         primary={
-                          <Typography variant="h6">
+                          <Typography variant="subtitle1">
                             <Typography component="span" variant="subtitle1">
                               Aida Burg
                             </Typography>{' '}
@@ -187,7 +179,7 @@ const Notification: React.FC<NotificationProps> = () => {
                       </ListItemAvatar>
                       <ListItemText
                         primary={
-                          <Typography variant="h6">
+                          <Typography variant="subtitle1">
                             Your Profile is Complete &nbsp;
                             <Typography component="span" variant="subtitle1">
                               60%
@@ -209,7 +201,7 @@ const Notification: React.FC<NotificationProps> = () => {
                       </ListItemAvatar>
                       <ListItemText
                         primary={
-                          <Typography variant="h6">
+                          <Typography variant="subtitle1">
                             <Typography component="span" variant="subtitle1">
                               Cristina Danny
                             </Typography>{' '}
@@ -227,7 +219,7 @@ const Notification: React.FC<NotificationProps> = () => {
                     <ListItemButton sx={{ textAlign: 'center', py: `${12}px !important` }}>
                       <ListItemText
                         primary={
-                          <Typography variant="h6" color="primary">
+                          <Typography variant="subtitle1" color="primary">
                             View All
                           </Typography>
                         }
