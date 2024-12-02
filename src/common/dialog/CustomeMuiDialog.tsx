@@ -4,7 +4,6 @@ import { MuiButton } from "../button/MuiButton";
 
 interface MuidialogProps extends DialogProps{
     title:string;
-    description: any;
     isOpen: boolean;
     handleClose: any;
     muiDialogWidth: string;
@@ -12,7 +11,7 @@ interface MuidialogProps extends DialogProps{
 }
 
 export default function CustomeMuiDialog(props: MuidialogProps){
-    const {title, description, isOpen, handleClose, muiDialogHeight, muiDialogWidth, children} = props;
+    const {title, isOpen, handleClose, muiDialogHeight, muiDialogWidth, children} = props;
     return(
         <Dialog
             open={isOpen}

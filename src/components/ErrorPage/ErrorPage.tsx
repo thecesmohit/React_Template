@@ -3,23 +3,27 @@ import React from "react"
 import { MuiButton } from "../../common/button/MuiButton";
 import "../../global.css";
 import CustomeMuiDialog from "../../common/dialog/CustomeMuiDialog";
+import { useAppDispatch, useAppSelector } from "../../store/hook";
+import { updateOpenState } from "../../store/ErrorPageSlice";
 
 export default function ErrorPage(){
-    const [open, setOpen] = React.useState(true);
+    const open = useAppSelector((state)=>state.errorPage.open);
+    const dispatch = useAppDispatch();
 
     const handleClickOpen = () => {
-        setOpen(true);
+        dispatch(updateOpenState(true));
     };
 
     const handleClose = () => {
-        setOpen(false);
+        dispatch(updateOpenState(false));
     };
     return(
         <React.Fragment>
-            <CustomeMuiDialog muiDialogWidth="900px" muiDialogHeight="200px"  title="UnCaught Runtime Error" description="" isOpen={open} handleClose={handleClose} open>
+            {/* <CustomeMuiDialog muiDialogWidth="900px" muiDialogHeight="200px"  title="UnCaught Runtime      Error" isOpen={open} handleClose={handleClose} open
+            >
                 Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
-            </CustomeMuiDialog>
-            {/* <Dialog
+            </CustomeMuiDialog> */}
+            <Dialog
                 fullScreen
                 open={open}
                 onClose={handleClose}
@@ -40,7 +44,7 @@ export default function ErrorPage(){
                         Cancel
                     </MuiButton>
                 </DialogActions>
-            </Dialog> */}
+            </Dialog> 
         </React.Fragment>
     );
 }

@@ -188,6 +188,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               Sign in
             </Button>
             <Link
+              
               component="button"
               type="button"
               onClick={handleClickOpen}
@@ -218,7 +219,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             <Typography sx={{ textAlign: 'center' }}>
               Don&apos;t have an account?{' '}
               <Link
-                href="/material-ui/getting-started/templates/sign-in/"
+                href=""
                 variant="body2"
                 sx={{ alignSelf: 'center' }}
               >
