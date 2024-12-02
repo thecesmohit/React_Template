@@ -11,6 +11,7 @@ import CustomToolbarActions from './CustomToolbarActions';
 import { Button } from '@mui/material';
 import BasicCard from '../ErrorPage/BaiscCard';
 import { Outlet } from 'react-router';
+import { useNavigate } from 'react-router';
 
 
 
@@ -29,7 +30,7 @@ const NAVIGATION: Navigation = [
 //     title: 'Analytics',
 //   },
   {
-    segment: 'Card',
+    segment: 'card',
     title: 'Card',
     icon: <DashboardIcon />,
   },
@@ -82,8 +83,10 @@ function useDemoRouter(initialPath: string): Router {
 
 
 export default function DashboardLayoutBasic(props: any) {
-  const { window } = props;
+  
+  const navigate = useNavigate();
 
+  const { window } = props;
   const router = useDemoRouter('/dashboard');
   
   // Remove this const when copying and pasting into your project.
@@ -109,6 +112,7 @@ export default function DashboardLayoutBasic(props: any) {
       },
       signOut: () => {
         setSession(null);
+        navigate('/signIn');
       },
     };
   }, []);

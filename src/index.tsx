@@ -10,6 +10,7 @@ import  store  from './store/store'
 import { Provider } from 'react-redux'
 
 
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -20,12 +21,7 @@ root.render(
   <React.StrictMode>
       <Provider store={store}>
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<App />}>
-          <Route path='dashboard' element={<Dashboard/>}/>
-          <Route path='/card' element={<BasicCard/>}/>
-        </Route>
-      </Routes>
+      <App/>
     </BrowserRouter>
     </Provider>
   </React.StrictMode>
