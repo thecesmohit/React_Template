@@ -93,8 +93,8 @@ export default function DashboardLayoutBasic(props: any) {
   const demoWindow = window ? window() : undefined;
   const [session, setSession] = React.useState<Session | null>({
     user: {
-      name: 'Bharat Kashyap',
-      email: 'bharatkashyap@outlook.com',
+      name: 'Vaibhav Mahajan',
+      email: 'vaibhavmahajan@outlook.com',
       image: 'https://avatars.githubusercontent.com/u/19550456',
     },
   });
@@ -104,8 +104,8 @@ export default function DashboardLayoutBasic(props: any) {
       signIn: () => {
         setSession({
           user: {
-            name: 'Bharat Kashyap',
-            email: 'bharatkashyap@outlook.com',
+            name: 'Vaibhav Mahajan',
+            email: 'vaibhavmahajan@outlook.com',
             image: 'https://avatars.githubusercontent.com/u/19550456',
           },
         });
@@ -117,16 +117,7 @@ export default function DashboardLayoutBasic(props: any) {
     };
   }, []);
      
-  // function SidebarFooter({ mini }: SidebarFooterProps) {
-  //   return (
-  //     <Typography
-  //       variant="caption"
-  //       sx={{ m: 1, whiteSpace: 'nowrap', overflow: 'hidden' }}
-  //     >
-  //       {mini ? '© MUI' : `© ${new Date().getFullYear()} Made with love by MUI`}
-  //     </Typography>
-  //   );
-  // }
+  
   return (
     <AppProvider
       session={session}
@@ -170,36 +161,3 @@ export default function DashboardLayoutBasic(props: any) {
   );
 }
 
-/**
- <MuiBox sx={{ display: "flex", minHeight: "100vh" }}>
-        <AppBar position="fixed" >
-            <MuiToolbar
-            variant="dense"
-            //className="tw-bg-slate-800"
-            style={{ "padding": "8", "backgroundColor": "white"}}
-            >
-            <MuiIconButton
-                color="inherit"
-                aria-label="open drawer"
-                //onClick={handleDrawerOpen}
-                edge="start"
-                sx={{ ml: 0.2 }}
-            >
-                <MenuIcon style={{"color":"black"}}/>
-            </MuiIconButton>
-            <MuiTypography variant="h6" style={{ flexGrow: 1 }}>
-                <img
-                alt="Logo"
-                style={{ height: "12px", marginRight: "8px" }}
-                />
-            </MuiTypography>
-            <MuiBox sx={{ display: "flex" }}>
-                <Notification path={location.pathname} />
-                <MuiIconButton disabled>
-                    <AccountCircle/>
-                </MuiIconButton>
-            </MuiBox>
-            </MuiToolbar>
-        </AppBar>
-    </MuiBox>
- */

@@ -5,6 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useErrorBoundary } from 'react-error-boundary';
 
 const bull = (
   <Box
@@ -15,7 +16,15 @@ const bull = (
   </Box>
 );
 
+
 export default function BasicCard(props: any) {
+
+  const {resetBoundary} = useErrorBoundary();
+
+  React.useEffect(() => {
+    throw new Error("Something went wrong");
+  }, []);
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>

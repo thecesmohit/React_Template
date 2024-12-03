@@ -1,22 +1,20 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import {  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import React from "react"
 import { MuiButton } from "../../common/button/MuiButton";
 import "../../global.css";
 import CustomeMuiDialog from "../../common/dialog/CustomeMuiDialog";
-import { useAppDispatch, useAppSelector } from "../../store/hook";
-import { updateOpenState } from "../../store/ErrorPageSlice";
+import { FallbackProps } from "react-error-boundary";
+import { useNavigate } from "react-router";
 
-export default function ErrorPage(){
-    const open = useAppSelector((state)=>state.errorPage.open);
-    const dispatch = useAppDispatch();
+export default function ErrorPage({ error, resetErrorBoundary }: FallbackProps){ 
 
-    const handleClickOpen = () => {
-        dispatch(updateOpenState(true));
+    const navigate = useNavigate(); // Initialize navigate
+
+    const handleNavigate = () => {
+        navigate('/'); // Navigate to the home page
+        resetErrorBoundary(); // Optionally reset the error boundary state
     };
 
-    const handleClose = () => {
-        dispatch(updateOpenState(false));
-    };
     return(
         <React.Fragment>
             {/* <CustomeMuiDialog muiDialogWidth="900px" muiDialogHeight="200px"  title="UnCaught Runtime      Error" isOpen={open} handleClose={handleClose} open
@@ -25,8 +23,7 @@ export default function ErrorPage(){
             </CustomeMuiDialog> */}
             <Dialog
                 fullScreen
-                open={open}
-                onClose={handleClose}
+                open={true}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
@@ -35,13 +32,12 @@ export default function ErrorPage(){
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Let Google help apps determine location. This means sending anonymous
-                        location data to Google, even when no apps are running.
+                        {error.message}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <MuiButton className="muiButtonCss" onClick={handleClose} >
-                        Cancel
+                    <MuiButton className="muiButtonCss" onClick={handleNavigate} >
+                        Go to home!
                     </MuiButton>
                 </DialogActions>
             </Dialog> 

@@ -4,8 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
+import  store  from './store/store'
+import { Provider } from 'react-redux'
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorPage from './components/ErrorPage/ErrorPage';
 
 
 
@@ -15,14 +17,23 @@ const root = ReactDOM.createRoot(
 
 
 root.render(
+
   <React.StrictMode>
-    <BrowserRouter>
+     <ErrorBoundary
+      FallbackComponent={ErrorPage}
+      onReset={() => {
+        // reset the state of your app here
+      }}
+      resetKeys={['someKey']}
+    >
       <Provider store={store}>
-        <App/>
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
       </Provider>
-    </BrowserRouter>
-    
+    </ErrorBoundary>
   </React.StrictMode>
+  
 );
 
 // If you want to start measuring performance in your app, pass a function
