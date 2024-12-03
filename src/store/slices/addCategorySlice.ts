@@ -5,7 +5,7 @@ export const addCategory = createAsyncThunk(
   'addCategory/addCategory',
   async (categoryData: any, thunkAPI) => {
     try {
-      const response = await apiClient.post('/categories', categoryData);
+      const response = await apiClient.post('/users', categoryData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue('Failed to add category');
