@@ -5,7 +5,8 @@ export const getCategories = createAsyncThunk(
   'getCategories/getCategories',
   async (_, thunkAPI) => {
     try {
-      const response = await apiClient.get('/categories');
+      console.log("thunk call",apiClient);
+      const response = await apiClient.get('/Users');
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue('Failed to fetch categories');
@@ -24,6 +25,7 @@ const getCategoriesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCategories.pending, (state) => {
+        console.log("thunk call slice");
         state.loading = true;
         state.error = null;
       })
