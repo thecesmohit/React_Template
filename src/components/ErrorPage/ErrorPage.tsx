@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material";
 import React from "react"
 import { MuiButton } from "../../common/button/MuiButton";
 import "../../global.css";
@@ -16,8 +16,21 @@ export default function ErrorPage(){
     };
     return(
         <React.Fragment>
-            <CustomeMuiDialog muiDialogWidth="900px" muiDialogHeight="200px"  title="UnCaught Runtime Error" description="" isOpen={open} handleClose={handleClose} open>
-                Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+            <CustomeMuiDialog muiDialogWidth="900px" muiDialogHeight="100px"  title="UnCaught Runtime Error" description="" isOpen={open} handleClose={handleClose} open>
+            <Container style={{ textAlign: 'center'}}>
+      <Typography variant="h3" color="error" gutterBottom>
+        404
+      </Typography>
+      <Typography variant="h5" gutterBottom>
+        Oops! The page you are looking for does not exist.
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        It might have been removed or the URL might be incorrect.
+      </Typography>
+      <Button variant="contained" color="primary" >
+        Go to Homepage
+      </Button>
+    </Container>
             </CustomeMuiDialog>
             {/* <Dialog
                 fullScreen
