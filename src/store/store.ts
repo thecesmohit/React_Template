@@ -1,11 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import getCategoriesReducer from './slices/getCategoriesSlice';
-import addCategoryReducer from './slices/addCategorySlice';
+import getUserReducer from './slices/getUserSlice';
+import addCategoryReducer from './slices/addUserSlice';
+import deleteUserReducer from './slices/deleteUserSlice';
+import addUserReducer from './slices/addUserSlice';
 
 const store = configureStore({
   reducer: {
-    getCategories: getCategoriesReducer,
-    addCategory: addCategoryReducer,
+    getUsers: getUserReducer,
+    addUser: addUserReducer,
+    deleteUser: deleteUserReducer,
   },
 });
 

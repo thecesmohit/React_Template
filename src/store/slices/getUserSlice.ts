@@ -1,39 +1,39 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import apiClient from '../api/apiClient';
 
-export const getCategories = createAsyncThunk(
-  'getCategories/getCategories',
+export const getUsers = createAsyncThunk(
+  'getUsers/getUsers',
   async (_, thunkAPI) => {
     try {
       console.log("thunk call",apiClient);
       const response = await apiClient.get('/Users');
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue('Failed to fetch categories');
+      return thunkAPI.rejectWithValue('Failed to fetch Users');
     }
   }
 );
 
-const getCategoriesSlice = createSlice({
-  name: 'getCategories',
+const getUsersSlice = createSlice({
+  name: 'getUsers',
   initialState: {
-    categories: [],
+    users: [],
     loading: false,
     error: '' as string | null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getCategories.pending, (state) => {
+      .addCase(getUsers.pending, (state) => {
         console.log("thunk call slice");
         state.loading = true;
         state.error = null;
       })
-      .addCase(getCategories.fulfilled, (state, action) => {
+      .addCase(getUsers.fulfilled, (state, action) => {
         state.loading = false;
-        state.categories = action.payload;
+        state.users = action.payload;
       })
-      .addCase(getCategories.rejected, (state, action) => {
+      .addCase(getUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload ? String(action.payload) : null;
       
@@ -41,4 +41,4 @@ const getCategoriesSlice = createSlice({
   },
 });
 
-export default getCategoriesSlice.reducer;
+export default getUsersSlice.reducer;
