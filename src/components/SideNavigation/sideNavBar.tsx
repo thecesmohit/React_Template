@@ -104,8 +104,8 @@ export default function DashboardLayoutBasic(props: any) {
       signIn: () => {
         setSession({
           user: {
-            name: 'Vaibhav Mahajan',
-            email: 'vaibhavmahajan@outlook.com',
+            name: 'Mohit Raut',
+            email: 'mohit.raut@outlook.com',
             image: 'https://avatars.githubusercontent.com/u/19550456',
           },
         });
@@ -115,7 +115,7 @@ export default function DashboardLayoutBasic(props: any) {
         navigate('/signIn');
       },
     };
-  }, []);
+  }, [session]);
      
   
   return (

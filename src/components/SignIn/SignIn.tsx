@@ -88,6 +88,8 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       return;
     }
     const data = new FormData(event.currentTarget);
+    document.cookie='EmailId ='+ String(data.get('email')); 
+    document.cookie='Password ='+ String(data.get('password')); 
     navigate('/');
   };
 

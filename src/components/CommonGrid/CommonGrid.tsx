@@ -2,7 +2,7 @@ import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import { IconButton, Toolbar, Snackbar } from '@mui/material';
+import { IconButton, Toolbar, Snackbar, Tooltip } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -60,15 +60,18 @@ const CommonGrid: React.FC<CommonGridProps> = ({
     if (onEdit && selectedRows && selectedRows.length === 1) {
       onEdit(selectedRows[0]);
     }
+    else{
+      handleSnackbar("Please select one row to execute delete.");
+    }
   };
 
   const handleDelete = () => {
     const selectedRows = gridRef.current?.api.getSelectedRows();
     if (onDelete && selectedRows && selectedRows.length === 1) {
-      const confirmDelete = window.confirm('Are you sure you want to delete this item?');
-      if (confirmDelete) {
-        onDelete(selectedRows[0]);
-      }
+      onDelete(selectedRows[0]);
+    }
+    else{
+      handleSnackbar("Please select atleast one row to execute delete.");
     }
   };
 
@@ -87,24 +90,32 @@ const CommonGrid: React.FC<CommonGridProps> = ({
         <h2>{document.title}</h2>
         <div style={{ display: 'flex', gap: '5px' }}>
           {enableAdd && (
-            <IconButton color="primary" onClick={handleAdd}>
-              <AddIcon />
-            </IconButton>
+            <Tooltip title="Add">
+              <IconButton color="primary" onClick={handleAdd}>
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
           )}
           {enableEdit && (
-            <IconButton color="secondary" onClick={handleEdit} >
-              <EditIcon />
-            </IconButton>
+            <Tooltip title="Edit">
+              <IconButton color="secondary" onClick={handleEdit} >
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
           )}
           {enableDelete && (
-            <IconButton color="error" onClick={handleDelete} >
-              <DeleteIcon />
-            </IconButton>
+            <Tooltip title="Delete">
+              <IconButton color="error" onClick={handleDelete} >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           )}
           {enableExport && (
-            <IconButton onClick={handleExport}>
-              <FileDownloadIcon />
-            </IconButton>
+            <Tooltip title="Export">
+              <IconButton onClick={handleExport}>
+                <FileDownloadIcon />
+              </IconButton>
+            </Tooltip>
           )}
         </div>
       </Toolbar>
