@@ -286,16 +286,29 @@ const Dashboard: React.FC = () => {
         enableExport={true}
       />
 
-      <Dialog open={isDialogOpen} onClose={handleDialogClose} fullWidth maxWidth="md">
+      <Dialog 
+        open={isDialogOpen} 
+        onClose={handleDialogClose} 
+        //fullWidth 
+        //maxWidth="md"
+        sx={{
+          "& .MuiDialog-paper": {
+            width: '1100px',
+            height: '550px', // You can set specific dimensions
+            maxWidth: "1100px", // Optional: Set max width
+            //maxHeight: "400px", // Optional: Set max height
+          },
+        }}
+      >
         <DialogTitle sx={{fontWeight:'700'}}>{currentRow ? 'Edit User' : 'Add User'}</DialogTitle>
         <DialogContent>
-        <Grid container rowSpacing={1} >
+        <Grid container rowSpacing={1}>
           {Object.keys(formValues).map((key) => (
             <>
-              <Grid item sm={3} key={key} sx={{display:'flex', alignItems:'center'}}>
+              <Grid item md={2} lg={1.5} key={key} sx={{display:'flex', alignItems:'center'}}>
                 <Typography variant='body1'>{key.charAt(0).toUpperCase() + key.slice(1)}</Typography>
               </Grid>
-              <Grid item sm={9} key={key}>
+              <Grid item md={9} lg={4} key={key}>
                 <TextField
                   size='small'
                   autoFocus={key === 'name'}
@@ -310,6 +323,8 @@ const Dashboard: React.FC = () => {
                   error={formValueErrors[key as keyof typeof formValueErrors]}
                   helperText={formValuesErrorMsg[key as keyof typeof formValuesErrorMsg]}
                 />
+              </Grid>
+              <Grid item md={1} lg={0.5} key={key}>
               </Grid>
             </>
           ))}

@@ -17,21 +17,21 @@ export default function ErrorPage({ error, resetErrorBoundary }: FallbackProps){
 
     return(
         <React.Fragment>
-            <CustomeMuiDialog muiDialogWidth="900px" muiDialogHeight="100px"  title="UnCaught Runtime Error" description="" isOpen={open} handleClose={handleClose} open>
-            <Container style={{ textAlign: 'center'}}>
-      <Typography variant="h3" color="error" gutterBottom>
-        404
-      </Typography>
-      <Typography variant="h5" gutterBottom>
-        Oops! The page you are looking for does not exist.
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        It might have been removed or the URL might be incorrect.
-      </Typography>
-      <Button variant="contained" color="primary" >
-        Go to Homepage
-      </Button>
-    </Container>
+            <CustomeMuiDialog muiDialogWidth="900px" muiDialogHeight="100px"  title="UnCaught Runtime Error"  isOpen={true} handleClose={()=>{}} open>
+                <Container style={{ textAlign: 'center'}}>
+                    <Typography variant="h3" color="error" gutterBottom>
+                        404
+                    </Typography>
+                    <Typography variant="h5" gutterBottom>
+                        Oops! The page you are looking for does not exist.
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                        It might have been removed or the URL might be incorrect.
+                    </Typography>
+                    <Button variant="contained" color="primary" onClick={handleNavigate} >
+                        Go to Homepage
+                    </Button>
+                </Container>
             </CustomeMuiDialog>
             {/* <Dialog
                 fullScreen
@@ -52,7 +52,7 @@ export default function ErrorPage({ error, resetErrorBoundary }: FallbackProps){
                         Go to home!
                     </MuiButton>
                 </DialogActions>
-            </Dialog> 
+            </Dialog>  */}
         </React.Fragment>
     );
 }

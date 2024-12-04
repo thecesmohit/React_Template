@@ -17,7 +17,7 @@ interface ForgotPasswordProps {
 
 export default function ForgotPassword({ open, handleClose }: ForgotPasswordProps) {
     const [showPasswordField, setShowPasswordField] = React.useState<boolean>(false);
-    const userList = useSelector((state: RootState)=> state.getuserList.userList);
+    const userList = useSelector((state: RootState)=> state.getUsers.users);
     const emailRef = React.useRef<HTMLDivElement | null>(null);
     const passwordRef = React.useRef<HTMLDivElement | null>(null);
 
