@@ -60,7 +60,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 export default function SignIn(props: { disableCustomTheme?: boolean }) {
 
   const navigate = useNavigate();
-  const userList = useSelector((state: RootState)=> state.getuserList.userList);
+  const userList = useSelector((state: RootState)=> state.getUsers.users);
 
   const [emailError, setEmailError] = React.useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState<String>('');
@@ -120,7 +120,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 
     console.log("email", email.value);
     console.log("password", password.value)
-    const verifyUser = userList.find(u=>u.email==email.value && u.password==password.value);
+    const verifyUser = userList.find((u: any)=>u.email==email.value && u.password==password.value);
     console.log("verifyUser", verifyUser);
     if(verifyUser===undefined)
       isValid=false;

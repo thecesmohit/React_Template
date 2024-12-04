@@ -1,38 +1,44 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import apiClient from '../api/apiClient';
 
-type user={
-    email:String,
-    password:String
-}
-
-interface UserState{
-    userList:user[]
-}
-
-const initialState: UserState = {
-    userList:[
-        {
-            email:"mohit@thecesgroup.com",
-            password:"Mohitraut2410"
-        },
-        {
-            email:"admin@thecesgroup.com",
-            password:"Admin123"
-        }
-    ]
-}
-
-const UserListSlice = createSlice({
-    name: 'userList',
-    initialState: initialState,
-    reducers:{
-        updatePassword: (state, action)=>{
-            const newUserList = state.userList;
-            const a = newUserList.find(u=>u.email===action.payload.username);
-        }
+export const getUsers = createAsyncThunk(
+  'getUsers/getUsers',
+  async (_, thunkAPI) => {
+    try {
+      console.log("thunk call",apiClient);
+      const response = await apiClient.get('/Users');
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Failed to fetch Users');
     }
+  }
+);
+
+const getUsersSlice = createSlice({
+  name: 'getUsers',
+  initialState: {
+    users: [],
+    loading: false,
+    error: '' as string | null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUsers.pending, (state) => {
+        console.log("thunk call slice");
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = action.payload;
+      })
+      .addCase(getUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload ? String(action.payload) : null;
+      
+      });
+  },
 });
 
-export const {updatePassword} = UserListSlice.actions;
-export default UserListSlice.reducer;
-
+export default getUsersSlice.reducer;

@@ -4,24 +4,17 @@ import { ColDef } from 'ag-grid-community';
 import { Grid, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, Snackbar, FormControl, FormLabel, Typography } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser } from '../../store/slices/addUserSlice';
+import { AppDispatch, RootState } from '../../store/store';
+import { getUsers } from '../../store/slices/getUserSlice';
+import { deleteUser } from '../../store/slices/deleteUserSlice';
+import { updateUser } from '../../store/slices/updateUserSlice';
 import CustomeYNDialog from '../../common/dialog/CustomeYNDialog';
 
 const Dashboard: React.FC = () => {
-  const [rowData, setRowData] = useState<any[]>([
-    {
-      name: 'Mohit',
-      email: 'mohit@gmail.com',
-      phone: '9561227225',
-      address: 'Shivaji colony',
-      city: 'Pulgaon',
-      state: 'Maharashtra',
-      country: 'India',
-      zip: '442302',
-      company: 'EtrmServices',
-      department: 'Developer',
-      title: 'SE1'
-    }
-  ]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { users, loading, error } = useSelector((state: RootState) => state.getUsers);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentRow, setCurrentRow] = useState<any | null>(null);
   const formValuesType = {
@@ -81,22 +74,13 @@ const Dashboard: React.FC = () => {
   //Delete Dialog
   const [isConfirmationBoxOpen, setIsConfirmationBoxOpen] = React.useState<boolean>(false);
   const [confirmationBoxMsg, setConfirmationBoxMsg] = React.useState<String | null>(null);
-  const [rowIdToDelete, setRowIdToDelete] = React.useState();
+  const [rowIdToDelete, setRowIdToDelete] = React.useState(0);
 
   useEffect(() => {
-    //fetchRowData();
-  }, []);
+    dispatch(getUsers());
+  }, [dispatch]);
 
-  const fetchRowData = async () => {
-    try {
-      const response = await axios.get('https://localhost:7050/api/users');
-      setRowData(response.data);
-    } catch (error) {
-      console.error('Failed to fetch data', error);
-    }
-  };
-
-  const columnDefs: ColDef[] = [
+   const columnDefs: ColDef[] = [
     { headerName: 'ID', field: 'id', checkboxSelection: true },
     { headerName: 'Name', field: 'name' },
     { headerName: 'Email', field: 'email' },
@@ -202,35 +186,26 @@ const Dashboard: React.FC = () => {
   };
 
   const handleDelete = async (selectedRow: any) => {
-    // const confirmDelete = window.confirm('Are you sure you want to delete this item?');
-    // if (confirmDelete) {
-    //   try {
-    //     await axios.delete(`https://localhost:7050/api/users/${selectedRow.id}`);
-    //     setRowData(prevData => prevData.filter(row => row.id !== selectedRow.id));
-    //     handleSnackbar('Item deleted successfully');
-    //   } catch (error) {
-    //     console.error('Failed to delete item', error);
-    //   }
-    // }
-    setRowIdToDelete(selectedRow.id);
+    setConfirmationBoxMsg('Are you sure you want to delete this item?');
     setIsConfirmationBoxOpen(true);
-    setConfirmationBoxMsg("Are you sure you want to delete this item?");
+    setRowIdToDelete(selectedRow.id);
   };
 
-  const handleYesBtnClick = async () =>{
+  const handleYesBtnClick = async() => {
     try {
-      await axios.delete(`https://localhost:7050/api/users/${rowIdToDelete}`);
-      setRowData(prevData => prevData.filter(row => row.id !== rowIdToDelete));
+      await dispatch(deleteUser(rowIdToDelete)).unwrap();
+      dispatch(getUsers());
       handleSnackbar('Item deleted successfully');
-    } catch (error) {
-      console.error('Failed to delete item', error);
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.title || 'Failed to delete item';
+      setSnackbarMessage(errorMessage);
+      setSnackbarOpen(true);
     }
   }
-
-  const handleNoBtnClick = () =>{
+  const handleNoBtnClick = () => {
     setIsConfirmationBoxOpen(false);
+    setConfirmationBoxMsg(null);
   }
-
   const handleSave = async () => {
 
     //Validation Part
@@ -253,22 +228,27 @@ const Dashboard: React.FC = () => {
     if (currentRow) {
       // Update existing row
       try {
-        await axios.put(`https://localhost:7050/api/users/${currentRow.id}`, formValues);
-        setRowData(prevData =>
-          prevData.map(row => (row.id === currentRow.id ? { ...row, ...formValues } : row))
-        );
-        handleSnackbar('Item edited successfully');
-      } catch (error) {
-        console.error('Failed to update item', error);
+        await dispatch(updateUser({ ...currentRow, ...formValues })).unwrap();
+        setSnackbarMessage('Item updated successfully');
+        dispatch(getUsers());
+        setSnackbarOpen(true);
+      } catch (error: any) {
+        const errorMessage = error?.response?.data?.title || 'Failed to update item';
+        setSnackbarMessage(errorMessage);
+        setSnackbarOpen(true);
       }
+  
+      
     } else {
       // Add new row
       try {
-        const response = await axios.post('https://localhost:7050/api/users', formValues);
-        setRowData(prevData => [...prevData, response.data]);
-        handleSnackbar('Item added successfully');
+        await dispatch(addUser(formValues)).unwrap();
+        setSnackbarMessage('Item added successfully');
+        dispatch(getUsers());
+        setSnackbarOpen(true);
       } catch (error) {
-        console.error('Failed to add item', error);
+        setSnackbarMessage('Failed to add item');
+        setSnackbarOpen(true);
       }
     }
     setIsDialogOpen(false);
@@ -296,7 +276,7 @@ const Dashboard: React.FC = () => {
     <div>
       <CommonGrid
         columnDefs={columnDefs}
-        rowData={rowData}
+        rowData={users}
         onAdd={handleAdd}
         onEdit={handleEdit}
         onDelete={handleDelete}
