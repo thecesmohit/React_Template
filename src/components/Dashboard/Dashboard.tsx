@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
     city: '',
     state: '',
     country: '',
-    zip: "",
+    zip: '',
     company: '',
     department: '',
     title: '',
@@ -75,6 +75,19 @@ const Dashboard: React.FC = () => {
   const [isConfirmationBoxOpen, setIsConfirmationBoxOpen] = React.useState<boolean>(false);
   const [confirmationBoxMsg, setConfirmationBoxMsg] = React.useState<String | null>(null);
   const [rowIdToDelete, setRowIdToDelete] = React.useState(0);
+  const dummyData = [{
+    name: 'Mohit',
+    email: 'mohit@gmail.com',
+    phone: '9787656545',
+    address: 'pulgaon',
+    city: 'pulgaon',
+    state: 'maharastra',
+    country: 'india',
+    zip: '442302',
+    company: 'etrm',
+    department: 'developer',
+    title: 'SE1',
+  }]
 
   useEffect(() => {
     dispatch(getUsers());
@@ -207,21 +220,27 @@ const Dashboard: React.FC = () => {
     setConfirmationBoxMsg(null);
   }
   const handleSave = async () => {
-
+    var newFormValueErrors = formValueErrors;
+    var newFormValuesErrorMsg = formValuesErrorMsg;
     //Validation Part
     if (!formValues.email || !/\S+@\S+\.\S+/.test(formValues.email)) {
-      setFormValueError({...formValueErrors, email:true});
-      setFormValuesErrorMsg({...formValuesErrorMsg, email:'Please enter a valid email address.'});
-      return;
+      newFormValueErrors = {...newFormValueErrors, email:true};
+      newFormValuesErrorMsg = ({...newFormValuesErrorMsg, email:'Please enter a valid email address.'});
     }
     if(!formValues.phone || !/((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}/.test(formValues.phone)){
-      setFormValueError({...formValueErrors, phone:true});
-      setFormValuesErrorMsg({...formValuesErrorMsg, phone:'Please enter a valid phone number.'});
-      return;
+      newFormValueErrors = ({...newFormValueErrors, phone:true});
+      newFormValuesErrorMsg = ({...newFormValuesErrorMsg, phone:'Please enter a valid phone number.'});
+      //return;
     }
     if(!formValues.zip || !/^\d{3}\s?\d{3}$/.test(formValues.zip)){
-      setFormValueError({...formValueErrors, zip:true});
-      setFormValuesErrorMsg({...formValuesErrorMsg, zip:'Please enter a valid zip pin, it must contain 6 number.'});
+      newFormValueErrors = ({...newFormValueErrors, zip:true});
+      newFormValuesErrorMsg = ({...newFormValuesErrorMsg, zip:'Please enter a valid zip, must contain 6 numbers.'});
+    }
+    if(newFormValueErrors !== formValueErrors)
+    {
+      console.log("Not match");
+      setFormValueError(newFormValueErrors);
+      setFormValuesErrorMsg(newFormValuesErrorMsg);
       return;
     }
 
@@ -276,7 +295,7 @@ const Dashboard: React.FC = () => {
     <div>
       <CommonGrid
         columnDefs={columnDefs}
-        rowData={users}
+        rowData={dummyData}
         onAdd={handleAdd}
         onEdit={handleEdit}
         onDelete={handleDelete}
@@ -293,38 +312,57 @@ const Dashboard: React.FC = () => {
         //maxWidth="md"
         sx={{
           "& .MuiDialog-paper": {
-            width: '1100px',
-            height: '550px', // You can set specific dimensions
+            width: '1000px',
+            height: '500px', // You can set specific dimensions
             maxWidth: "1100px", // Optional: Set max width
             //maxHeight: "400px", // Optional: Set max height
           },
         }}
       >
-        <DialogTitle sx={{fontWeight:'700'}}>{currentRow ? 'Edit User' : 'Add User'}</DialogTitle>
+        <DialogTitle sx={{fontSize:"1.5rem", fontWeight:'550'}}>{currentRow ? 'Edit User' : 'Add User'}</DialogTitle>
         <DialogContent>
         <Grid container rowSpacing={1}>
           {Object.keys(formValues).map((key) => (
             <>
-              <Grid item md={2} lg={1.5} key={key} sx={{display:'flex', alignItems:'center'}}>
+              <Grid item sm={2} md={1.5} key={key+"label"} sx={{display:'flex', alignItems:'center'}}>
                 <Typography variant='body1'>{key.charAt(0).toUpperCase() + key.slice(1)}</Typography>
               </Grid>
-              <Grid item md={9} lg={4} key={key}>
+              <Grid item sm={9} md={4} key={key}>
                 <TextField
+                  required
                   size='small'
                   autoFocus={key === 'name'}
                   margin="dense"
                   id={key}
                   name={key}
-                  //label={key.charAt(0).toUpperCase() + key.slice(1)}
                   type={formValuesType[key as keyof typeof formValuesType]}
                   fullWidth
                   value={formValues[key as keyof typeof formValues]}
                   onChange={handleInputChange}
                   error={formValueErrors[key as keyof typeof formValueErrors]}
                   helperText={formValuesErrorMsg[key as keyof typeof formValuesErrorMsg]}
+                  InputProps={{
+                    sx: {
+                      height: "30px", // Adjust height for the input box
+                      padding: "0",   // Adjust padding for a more compact look
+                    },
+                  }}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginTop: "1px", // Adjust spacing for helper text
+                      fontSize: "0.8rem", // Optional: reduce the font size of helper text
+                      marginLeft:"0px",
+                      marginRight:"0px"
+                    },
+                  }}
+                  sx={{
+                    ".MuiInputBase-root": {
+                      fontSize: "0.9rem", // Optional: adjust the font size
+                    },
+                  }}
                 />
               </Grid>
-              <Grid item md={1} lg={0.5} key={key}>
+              <Grid item sm={1} md={0.5} key={key+"space"}>
               </Grid>
             </>
           ))}
