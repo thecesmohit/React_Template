@@ -4,7 +4,7 @@ import { MuiButton } from "../../common/button/MuiButton";
 import "../../global.css";
 import CustomeMuiDialog from "../../common/dialog/CustomeMuiDialog";
 import { FallbackProps } from "react-error-boundary";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 interface MuidialogProps extends DialogProps{
     open:boolean

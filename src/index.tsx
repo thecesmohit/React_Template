@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import  store  from './store/store'
 import { Provider } from 'react-redux'
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorPage from './components/ErrorPage/ErrorPage';
-
+import { Auth0Provider } from '@auth0/auth0-react';
 
 
 const root = ReactDOM.createRoot(
@@ -19,6 +19,17 @@ const root = ReactDOM.createRoot(
 root.render(
 
   <React.StrictMode>
+     <Auth0Provider
+   domain="dev-s1hclgih1pizpjk8.us.auth0.com"
+   clientId="q4NTNy1AFOYLg7ujzOs3OdZewJyoqMxA"
+   authorizationParams={{
+     redirect_uri: window.location.origin,
+     audience: "BackendTemplate"
+   }}
+    >
+    <BrowserRouter>
+    <Provider store={store}>
+     
      <ErrorBoundary
       FallbackComponent={ErrorPage}
       onReset={() => {
@@ -26,12 +37,15 @@ root.render(
       }}
       resetKeys={['someKey']}
     >
-      <Provider store={store}>
-        <BrowserRouter>
+      
+       
             <App/>
-        </BrowserRouter>
-      </Provider>
+      
     </ErrorBoundary>
+   
+    </Provider>
+    </BrowserRouter>
+    </Auth0Provider>
   </React.StrictMode>
   
 );

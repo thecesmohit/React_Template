@@ -10,8 +10,12 @@ import { PageContainer } from '@toolpad/core/PageContainer';
 import CustomToolbarActions from './CustomToolbarActions';
 import { Button } from '@mui/material';
 import BasicCard from '../ErrorPage/BaiscCard';
-import { Outlet } from 'react-router';
-import { useNavigate } from 'react-router';
+import { Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import { logout } from '../../store/slices/authSlice';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 
@@ -21,7 +25,7 @@ const NAVIGATION: Navigation = [
 //     title: 'Main items',
 //   },
   {
-    segment: 'dashboard',
+    segment: '',
     title: 'Dashboard',
     icon: <DashboardIcon />,
   },
@@ -85,7 +89,7 @@ function useDemoRouter(initialPath: string): Router {
 export default function DashboardLayoutBasic(props: any) {
   
   const navigate = useNavigate();
-
+  const dispatch = useDispatch<AppDispatch>();
   const { window } = props;
   const router = useDemoRouter('/dashboard');
   
@@ -104,14 +108,15 @@ export default function DashboardLayoutBasic(props: any) {
       signIn: () => {
         setSession({
           user: {
-            name: 'Mohit Raut',
-            email: 'mohit.raut@outlook.com',
-            image: 'https://avatars.githubusercontent.com/u/19550456',
+            name: 'Vaibhav Mahajan',
+      email: 'vaibhavmahajan@outlook.com',
+      image: 'https://avatars.githubusercontent.com/u/19550456',
           },
         });
       },
       signOut: () => {
         setSession(null);
+        dispatch(logout());
         navigate('/signIn');
       },
     };

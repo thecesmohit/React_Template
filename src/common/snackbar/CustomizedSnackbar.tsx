@@ -13,7 +13,6 @@ type MuiSnackbarProps={
 
 export default function CustomizedSnackbar(props: MuiSnackbarProps) {
   const {open, message, bgColor, handleClose} = props;
-  console.log("bgColor", bgColor);
 
   return (
     <div>

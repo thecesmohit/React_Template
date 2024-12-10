@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -13,11 +13,13 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import { useNavigate } from 'react-router';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
 import ForgotPassword from './ForgotPassword';
 import CustomizedSnackbar from '../../common/snackbar/CustomizedSnackbar';
+import { login } from '../../store/slices/authSlice';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -68,8 +70,28 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState<String>('');
   const [open, setOpen] = React.useState<boolean>(false);
   const [openCustomeSnackbar, setOpenCustomeSnackbar] = React.useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const { token, loading, error } = useSelector((state: RootState) => state.auth);
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const { loginWithRedirect } = useAuth0(); // Auth0 hook
 
+  useEffect(() => {
+    // Redirect if login is successful
+    if (token) {
+      navigate('/');
+    }
+  }, [token, navigate]);
 
+  const handleLogin = async () => {
+    const action = await dispatch(login({ username, password }));
+    if (login.rejected.match(action)) {
+      setOpenCustomeSnackbar(true);
+    }
+  };
+  const handleAuth0Login = () => {
+    loginWithRedirect();
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -184,6 +206,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                   fullWidth
                   variant="outlined"
                   color={emailError ? 'error' : 'primary'}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </FormControl>
               <FormControl>
@@ -202,6 +225,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                   fullWidth
                   variant="outlined"
                   color={passwordError ? 'error' : 'primary'}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </FormControl>
               <FormControlLabel
@@ -213,10 +237,19 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 type="submit"
                 fullWidth
                 variant="contained"
-                onClick={validateInputs}
+                onClick={handleLogin}
               >
                 Sign in
               </Button>
+              <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              onClick={handleAuth0Login}
+              sx={{ mt: 2 }}
+            >
+              Sign in with Auth0
+            </Button>
               <Link
                 
                 component="button"
@@ -227,35 +260,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               >
                 Forgot your password?
               </Link>
-            </Box>
-            <Divider>or</Divider>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              {/* <Button
-                fullWidth
-                variant="outlined"
-                onClick={() => alert('Sign in with Google')}
-                startIcon={<GoogleIcon />}
-              >
-                Sign in with Google
-              </Button>
-              <Button
-                fullWidth
-                variant="outlined"
-                onClick={() => alert('Sign in with Facebook')}
-                startIcon={<FacebookIcon />}
-              >
-                Sign in with Facebook
-              </Button> */}
-              <Typography sx={{ textAlign: 'center' }}>
-                Don&apos;t have an account?{' '}
-                <Link
-                  href=""
-                  variant="body2"
-                  sx={{ alignSelf: 'center' }}
-                >
-                  Sign up
-                </Link>
-              </Typography>
             </Box>
           </Card>
         </SignInContainer>
