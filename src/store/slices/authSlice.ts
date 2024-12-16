@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import apiClient from "../api/apiClient";
+import getAzureADToken from "../api/getAzureADToken";
 
 interface AuthState {
   token: string | null;
@@ -17,8 +18,11 @@ const initialState: AuthState = {
 export const login = createAsyncThunk(
   "auth/login",
   async (credentials: { username: string; password: string }, thunkAPI) => {
+    
+    const token = await getAzureADToken();
+
     try {
-      const response = await apiClient.post("auth/login", credentials);
+      const response = await apiClient(token).post("auth/login", credentials);
       localStorage.setItem("token", response.data.token);
       return response.data.token;
     } catch (error) {

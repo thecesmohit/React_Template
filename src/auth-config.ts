@@ -3,9 +3,9 @@ import { LogLevel } from "@azure/msal-browser";
 
 export const msalConfig: Configuration = {
     auth: {
-      clientId: "08c62437-4b61-47b8-ab08-a622c1a72617", // Your Azure AD app's client ID
+      clientId: String(process.env.REACT_APP_AZURE_AD_CLIENT_ID), // Your Azure AD app's client ID
       // Your Azure AD tenant ID
-      authority: "https://login.microsoftonline.com/fcad1b3a-ffdf-40b6-96a1-7f4a18b679c2", 
+      authority: String(process.env.REACT_APP_AZURE_AD_AUTHORITY), 
       redirectUri: "/", // Redirect URI,
       //Indicate the page to navigate after logout
       postLogoutRedirectUri: "/",
@@ -46,5 +46,5 @@ export const msalConfig: Configuration = {
   };
 
   export const loginRequest = {
-    scopes: ["api://ef5c77f9-da6d-4e13-ae10-988baa60614d/Read.Write"], // Replace with required scopes
+    scopes: [String(process.env.REACT_APP_AZURE_AD_SCOPE)], // Replace with required scopes
   };
