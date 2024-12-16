@@ -22,7 +22,7 @@ export default function CustomeMuiDialog(props: MuidialogProps){
                 "& .MuiDialog-paper": {
                   width: {muiDialogWidth},
                   height: {muiDialogHeight}, // You can set specific dimensions
-                  //maxWidth: "500px", // Optional: Set max width
+                  maxWidth: "1200px", // Optional: Set max width
                   //maxHeight: "400px", // Optional: Set max height
                 },
               }}

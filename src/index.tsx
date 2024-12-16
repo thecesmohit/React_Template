@@ -7,9 +7,30 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import  store  from './store/store'
 import { Provider } from 'react-redux'
 import { ErrorBoundary } from 'react-error-boundary';
-import ErrorPage from './components/ErrorPage/ErrorPage';
+import ErrorPage from './components/ErrorPage/RouteErrorPage';
+import MuiAppTheme from './common/theme/MuiAppTheme';
+import { EventType, PublicClientApplication, AuthenticationResult} from '@azure/msal-browser';
+import { msalConfig } from './auth-config';
+import { MsalProvider } from '@azure/msal-react';
 
 
+//MSAL should instantiated outside of component tree so that at time of rerendering it will not re-instantiated
+export const instance = new PublicClientApplication(msalConfig);
+
+if(!instance.getActiveAccount() && instance.getAllAccounts.length>0){
+  instance.setActiveAccount(instance.getAllAccounts()[0]);
+}
+
+//Listen for sign-in event and set active account
+instance.addEventCallback((event)=>{
+  if (event.eventType === EventType.LOGIN_SUCCESS) {
+    const payload = event.payload as AuthenticationResult; // Narrow the type
+
+    if (payload && payload.account) {
+      instance.setActiveAccount(payload.account);
+    }
+  }
+})
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -19,19 +40,15 @@ const root = ReactDOM.createRoot(
 root.render(
 
   <React.StrictMode>
-     <ErrorBoundary
-      FallbackComponent={ErrorPage}
-      onReset={() => {
-        // reset the state of your app here
-      }}
-      resetKeys={['someKey']}
-    >
+    <MsalProvider instance={instance}>
       <Provider store={store}>
-        <BrowserRouter>
+        {/* <MuiAppTheme> */}
+          <BrowserRouter>
             <App/>
-        </BrowserRouter>
+          </BrowserRouter>
+        {/* </MuiAppTheme> */}
       </Provider>
-    </ErrorBoundary>
+    </MsalProvider>
   </React.StrictMode>
   
 );

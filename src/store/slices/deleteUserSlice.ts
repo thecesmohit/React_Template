@@ -1,10 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import apiClient from '../api/apiClient';
+import getAzureADToken from '../api/getAzureADToken';
 
 
 export const deleteUser = createAsyncThunk('users/deleteUser', async (userId: number, { rejectWithValue }) => {
+  
+  const token = getAzureADToken();
+
   try {
-    const response = await apiClient.delete(`Users/${userId}`)
+    const response = await apiClient(token).delete(`Users/${userId}`)
     return userId;
   } catch (error) {
     return rejectWithValue(error);

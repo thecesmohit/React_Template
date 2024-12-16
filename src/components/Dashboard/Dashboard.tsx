@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CommonGrid from '../CommonGrid/CommonGrid';
 import { ColDef } from 'ag-grid-community';
-import { Grid, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, Snackbar, FormControl, FormLabel, Typography } from '@mui/material';
+import { Grid, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, Snackbar, FormControl, FormLabel, Typography, Divider, Stack, Box } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,43 +18,96 @@ const Dashboard: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentRow, setCurrentRow] = useState<any | null>(null);
   const formValuesType = {
-    name: "text",
-    email: "text",
-    phone: "number",
-    address: "text",
-    city: "text",
-    state: "text",
-    country: "text",
-    zip: "number",
-    company: "text",
-    department: "text",
-    title: "text",
+    name: {
+      type:"text",
+      isRequried: true
+    },
+    email: {
+      type:"text",
+      isRequried: true
+    },
+    phone: {
+      type:"number",
+      isRequried: true
+    },
+    address: {
+      type:"text",
+      isRequried: true
+    },
+    city: {
+      type:"text",
+      isRequried: true
+    },
+    state: {
+      type:"text",
+      isRequried: true
+    },
+    country: {
+      type:"text",
+      isRequried: true
+    },
+    zip: {
+      type:"number",
+      isRequried: true
+    },
+    company: {
+      type:"text",
+      isRequried: false
+    },
+    department: {
+      type:"text",
+      isRequried: false
+    },
+    title: {
+      type:"text",
+      isRequried: false
+    },
   };
   const [formValueErrors, setFormValueError] = useState({
-    name: false,
-    email: false,
-    phone: false,
-    address: false,
-    city: false,
-    state: false,
-    country: false,
-    zip: false,
-    company: false,
-    department: false,
-    title: false,
-  });
-  const [formValuesErrorMsg, setFormValuesErrorMsg] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    country: '',
-    zip: '',
-    company: '',
-    department: '',
-    title: '',
+    name: {
+      isError: false,
+      errorMsg: ''
+    },
+    email: {
+      isError: false,
+      errorMsg: ''
+    },
+    phone: {
+      isError: false,
+      errorMsg: ''
+    },
+    address: {
+      isError: false,
+      errorMsg: ''
+    },
+    city: {
+      isError: false,
+      errorMsg: ''
+    },
+    state: {
+      isError: false,
+      errorMsg: ''
+    },
+    country: {
+      isError: false,
+      errorMsg: ''
+    },
+    zip: {
+      isError: false,
+      errorMsg: ''
+    },
+    company: {
+      isError: false,
+      errorMsg: ''
+    },
+    department: {
+      isError: false,
+      errorMsg: ''
+    },
+    title: {
+      isError: false,
+      errorMsg: ''
+    },
   });
   const [formValues, setFormValues] = useState({
     name: '',
@@ -124,30 +177,50 @@ const Dashboard: React.FC = () => {
       title: '',
     });
     setFormValueError({
-      name: false,
-      email: false,
-      phone: false,
-      address: false,
-      city: false,
-      state: false,
-      country: false,
-      zip: false,
-      company: false,
-      department: false,
-      title: false,
-    });
-    setFormValuesErrorMsg({
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-      city: '',
-      state: '',
-      country: '',
-      zip: "",
-      company: '',
-      department: '',
-      title: '',
+      name: {
+        isError: false,
+        errorMsg: ''
+      },
+      email: {
+        isError: false,
+        errorMsg: ''
+      },
+      phone: {
+        isError: false,
+        errorMsg: ''
+      },
+      address: {
+        isError: false,
+        errorMsg: ''
+      },
+      city: {
+        isError: false,
+        errorMsg: ''
+      },
+      state: {
+        isError: false,
+        errorMsg: ''
+      },
+      country: {
+        isError: false,
+        errorMsg: ''
+      },
+      zip: {
+        isError: false,
+        errorMsg: ''
+      },
+      company: {
+        isError: false,
+        errorMsg: ''
+      },
+      department: {
+        isError: false,
+        errorMsg: ''
+      },
+      title: {
+        isError: false,
+        errorMsg: ''
+      },
     });
     setIsDialogOpen(true);
   };
@@ -169,30 +242,50 @@ const Dashboard: React.FC = () => {
         title: selectedRow.title,
       });
       setFormValueError({
-        name: false,
-        email: false,
-        phone: false,
-        address: false,
-        city: false,
-        state: false,
-        country: false,
-        zip: false,
-        company: false,
-        department: false,
-        title: false,
-      });
-      setFormValuesErrorMsg({
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-        city: '',
-        state: '',
-        country: '',
-        zip: "",
-        company: '',
-        department: '',
-        title: '',
+        name: {
+          isError: false,
+          errorMsg: ''
+        },
+        email: {
+          isError: false,
+          errorMsg: ''
+        },
+        phone: {
+          isError: false,
+          errorMsg: ''
+        },
+        address: {
+          isError: false,
+          errorMsg: ''
+        },
+        city: {
+          isError: false,
+          errorMsg: ''
+        },
+        state: {
+          isError: false,
+          errorMsg: ''
+        },
+        country: {
+          isError: false,
+          errorMsg: ''
+        },
+        zip: {
+          isError: false,
+          errorMsg: ''
+        },
+        company: {
+          isError: false,
+          errorMsg: ''
+        },
+        department: {
+          isError: false,
+          errorMsg: ''
+        },
+        title: {
+          isError: false,
+          errorMsg: ''
+        },
       });
       setIsDialogOpen(true);
     
@@ -221,26 +314,35 @@ const Dashboard: React.FC = () => {
   }
   const handleSave = async () => {
     var newFormValueErrors = formValueErrors;
-    var newFormValuesErrorMsg = formValuesErrorMsg;
     //Validation Part
+    if(!formValues.name){
+      newFormValueErrors = {...newFormValueErrors, name:{isError:true, errorMsg:'required'}};
+    }
     if (!formValues.email || !/\S+@\S+\.\S+/.test(formValues.email)) {
-      newFormValueErrors = {...newFormValueErrors, email:true};
-      newFormValuesErrorMsg = ({...newFormValuesErrorMsg, email:'Please enter a valid email address.'});
+      newFormValueErrors = {...newFormValueErrors, email:{isError:true, errorMsg:'please enter a valid email address.'}};
     }
     if(!formValues.phone || !/((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}/.test(formValues.phone)){
-      newFormValueErrors = ({...newFormValueErrors, phone:true});
-      newFormValuesErrorMsg = ({...newFormValuesErrorMsg, phone:'Please enter a valid phone number.'});
-      //return;
+      newFormValueErrors = {...newFormValueErrors, phone:{isError:true, errorMsg:'please enter a valid phone number.'}};
+    }
+    if(!formValues.address){
+      newFormValueErrors = {...newFormValueErrors, address:{isError:true, errorMsg:'required'}};
+    }
+    if(!formValues.city){
+      newFormValueErrors = {...newFormValueErrors, city:{isError:true, errorMsg:'required'}};
+    }
+    if(!formValues.state){
+      newFormValueErrors = {...newFormValueErrors, state:{isError:true, errorMsg:'required'}};
+    }
+    if(!formValues.country){
+      newFormValueErrors = {...newFormValueErrors, country:{isError:true, errorMsg:'required'}};
     }
     if(!formValues.zip || !/^\d{3}\s?\d{3}$/.test(formValues.zip)){
-      newFormValueErrors = ({...newFormValueErrors, zip:true});
-      newFormValuesErrorMsg = ({...newFormValuesErrorMsg, zip:'Please enter a valid zip, must contain 6 numbers.'});
+      newFormValueErrors = ({...newFormValueErrors, zip:{isError:true, errorMsg:'please enter a valid zip, must contain 6 numbers.'}});
     }
     if(newFormValueErrors !== formValueErrors)
     {
       console.log("Not match");
       setFormValueError(newFormValueErrors);
-      setFormValuesErrorMsg(newFormValuesErrorMsg);
       return;
     }
 
@@ -295,7 +397,7 @@ const Dashboard: React.FC = () => {
     <div>
       <CommonGrid
         columnDefs={columnDefs}
-        rowData={dummyData}
+        rowData={users}
         onAdd={handleAdd}
         onEdit={handleEdit}
         onDelete={handleDelete}
@@ -313,7 +415,7 @@ const Dashboard: React.FC = () => {
         sx={{
           "& .MuiDialog-paper": {
             width: '1000px',
-            height: '500px', // You can set specific dimensions
+            height: '570px', // You can set specific dimensions
             maxWidth: "1100px", // Optional: Set max width
             //maxHeight: "400px", // Optional: Set max height
           },
@@ -324,46 +426,68 @@ const Dashboard: React.FC = () => {
         <Grid container rowSpacing={1}>
           {Object.keys(formValues).map((key) => (
             <>
-              <Grid item sm={2} md={1.5} key={key+"label"} sx={{display:'flex', alignItems:'center'}}>
-                <Typography variant='body1'>{key.charAt(0).toUpperCase() + key.slice(1)}</Typography>
+              <Grid item sm={11} md={5.5} key={key}>
+                <Stack
+                  spacing={1}
+                >
+                  <Box 
+                    sx={{ 
+                      display: "flex", 
+                      justifyContent: "space-between", // Space elements apart
+                      alignItems: "center", // Align items vertically
+                    }}
+                  >
+                    <Typography variant='body1'>
+                      {
+                        formValuesType[key as keyof typeof formValuesType].isRequried ?
+                        key.charAt(0).toUpperCase() + key.slice(1)+" * " :
+                        key.charAt(0).toUpperCase() + key.slice(1)
+                      }
+                    </Typography>
+                    {
+                      formValueErrors[key as keyof typeof formValueErrors].isError
+                      &&
+                      <Typography variant='body1' color='error' sx={{ textAlign: "right", flex: 1, fontSize:'0.70rem'}}>
+                        {formValueErrors[key as keyof typeof formValueErrors].errorMsg}
+                      </Typography>
+                    }
+                  </Box>
+                  <TextField
+                      size='small'
+                      autoFocus={key === 'name'}
+                      margin="dense"
+                      id={key}
+                      name={key}
+                      type={formValuesType[key as keyof typeof formValuesType].type}
+                      fullWidth
+                      placeholder={'Enter '+key.charAt(0).toUpperCase() + key.slice(1)}
+                      value={formValues[key as keyof typeof formValues]}
+                      onChange={handleInputChange}
+                      error={formValueErrors[key as keyof typeof formValueErrors].isError}
+                      InputProps={{
+                        sx: {
+                          height: "30px", // Adjust height for the input box
+                          padding: "0",   // Adjust padding for a more compact look
+                        },
+                      }}
+                      FormHelperTextProps={{
+                        sx: {
+                          marginTop: "1px", // Adjust spacing for helper text
+                          fontSize: "0.8rem", // Optional: reduce the font size of helper text
+                          marginLeft:"0px",
+                          marginRight:"0px"
+                        },
+                      }}
+                      sx={{
+                        ".MuiInputBase-root": {
+                          fontSize: "0.9rem", // Optional: adjust the font size
+                        },
+                        margin:"0px !important"
+                      }}
+                    />
+                </Stack>
               </Grid>
-              <Grid item sm={9} md={4} key={key}>
-                <TextField
-                  required
-                  size='small'
-                  autoFocus={key === 'name'}
-                  margin="dense"
-                  id={key}
-                  name={key}
-                  type={formValuesType[key as keyof typeof formValuesType]}
-                  fullWidth
-                  value={formValues[key as keyof typeof formValues]}
-                  onChange={handleInputChange}
-                  error={formValueErrors[key as keyof typeof formValueErrors]}
-                  helperText={formValuesErrorMsg[key as keyof typeof formValuesErrorMsg]}
-                  InputProps={{
-                    sx: {
-                      height: "30px", // Adjust height for the input box
-                      padding: "0",   // Adjust padding for a more compact look
-                    },
-                  }}
-                  FormHelperTextProps={{
-                    sx: {
-                      marginTop: "1px", // Adjust spacing for helper text
-                      fontSize: "0.8rem", // Optional: reduce the font size of helper text
-                      marginLeft:"0px",
-                      marginRight:"0px"
-                    },
-                  }}
-                  sx={{
-                    ".MuiInputBase-root": {
-                      fontSize: "0.9rem", // Optional: adjust the font size
-                    },
-                  }}
-                />
-              </Grid>
-              <Grid item sm={1} md={0.5} key={key+"space"}>
-              </Grid>
+              <Grid item sm={1} md={0.5} key={key+"space"}/>
             </>
           ))}
         </Grid>

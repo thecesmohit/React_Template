@@ -16,7 +16,10 @@ import Popover from '@mui/material/Popover';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import Notification from './Notification';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
 
+type Mode = 'light' | 'dark' | 'system' | null;
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -57,23 +60,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-
 const CustomToolbarActions: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [selectedTheme, setSelectedTheme] = React.useState<String>("system");
 
   const { setMode } = useColorScheme();
   
   const handleThemeChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setMode(event.target.value as 'light' | 'dark' | 'system');
+      const selectedMode: Mode = event.target.value as Mode;
+      setMode(selectedMode);
+      setSelectedTheme(String(selectedMode));
     },
     [setMode],
   );
-  const handleThemeSwitch = () => {
-    // Logic for switching theme (light/dark mode)
-    console.log('Theme switcher clicked');
-  };
 
   const toggleMenu = React.useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
@@ -115,9 +118,8 @@ const CustomToolbarActions: React.FC = () => {
           }}
           sx={{ display: { xs: 'none', md: 'inline-block' }, mr: 1 }}
         />
-<Notification /> 
+      <Notification /> 
       {/* Theme Switcher Icon */}
-      
       <React.Fragment>
         <Tooltip title="Settings" enterDelay={1000}>
           <div>
@@ -141,9 +143,9 @@ const CustomToolbarActions: React.FC = () => {
               <FormLabel id="custom-theme-switcher-label">Theme</FormLabel>
               <RadioGroup
                 aria-labelledby="custom-theme-switcher-label"
-                defaultValue="system"
                 name="custom-theme-switcher"
                 onChange={handleThemeChange}
+                value={selectedTheme}
               >
                 <FormControlLabel value="light" control={<Radio />} label="Light" />
                 <FormControlLabel value="system" control={<Radio />} label="System" />

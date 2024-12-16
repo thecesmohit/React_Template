@@ -2,7 +2,7 @@ import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import { IconButton, Toolbar, Snackbar, Tooltip } from '@mui/material';
+import { IconButton, Toolbar, Snackbar, Tooltip, useColorScheme } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -14,6 +14,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
+import { UseDispatch, useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import { getUsers } from '../../store/slices/getUserSlice';
+import getAzureADToken from '../../store/api/getAzureADToken';
 
 interface CommonGridProps {
   columnDefs: ColDef[];
@@ -38,15 +42,18 @@ const CommonGrid: React.FC<CommonGridProps> = ({
   enableDelete = true,
   enableExport = true,
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const {mode} = useColorScheme();
   const gridRef = React.useRef<AgGridReact>(null);
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
 
   const handleExport = () => {
-    if (gridRef.current) {
-      gridRef.current.api.exportDataAsCsv();
-      handleSnackbar('Data exported successfully');
-    }
+    // if (gridRef.current) {
+    //   gridRef.current.api.exportDataAsCsv();
+    //   handleSnackbar('Data exported successfully');
+    // }
+    console.log("generated token", getAzureADToken());
   };
 
   const handleAdd = () => {
@@ -119,7 +126,7 @@ const CommonGrid: React.FC<CommonGridProps> = ({
           )}
         </div>
       </Toolbar>
-      <div className="ag-theme-alpine" style={{ height: 750, width: '100%' }}>
+      <div className={mode=='dark' ? "ag-theme-alpine-dark" : "ag-theme-alpine"} style={{ height: 750, width: '100%' }}>
         <AgGridReact
           ref={gridRef}
           rowData={rowData}

@@ -8,10 +8,15 @@ import {type SidebarFooterProps, DashboardLayout } from '@toolpad/core/Dashboard
 import { PageContainer } from '@toolpad/core/PageContainer';
 
 import CustomToolbarActions from './CustomToolbarActions';
-import { Button } from '@mui/material';
+import { Button, CssBaseline } from '@mui/material';
 import BasicCard from '../ErrorPage/BaiscCard';
 import { Outlet } from 'react-router';
 import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { darkTheme, lightTheme, naturalTheme } from '../../common/theme/MuiAppTheme';
+import { ThemeProvider } from '@mui/system';
+import { useMsal } from '@azure/msal-react';
 
 
 
@@ -21,7 +26,7 @@ const NAVIGATION: Navigation = [
 //     title: 'Main items',
 //   },
   {
-    segment: 'dashboard',
+    segment: '',
     title: 'Dashboard',
     icon: <DashboardIcon />,
   },
@@ -54,7 +59,10 @@ const NAVIGATION: Navigation = [
 ];
 
 const demoTheme = extendTheme({
-  colorSchemes: { light: true, dark: true },
+  colorSchemes: { 
+    light: true,
+    dark: true
+  },
   colorSchemeSelector: 'class',
   breakpoints: {
     values: {
@@ -85,7 +93,7 @@ function useDemoRouter(initialPath: string): Router {
 export default function DashboardLayoutBasic(props: any) {
   
   const navigate = useNavigate();
-
+  const { instance } = useMsal();
   const { window } = props;
   const router = useDemoRouter('/dashboard');
   
@@ -112,13 +120,13 @@ export default function DashboardLayoutBasic(props: any) {
       },
       signOut: () => {
         setSession(null);
-        navigate('/signIn');
+        //navigate('/signIn');
+        instance.logout();
       },
     };
   }, [session]);
-     
   
-  return (
+  return (     
     <AppProvider
       session={session}
       authentication={authentication}

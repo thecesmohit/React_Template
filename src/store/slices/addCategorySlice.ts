@@ -1,11 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import apiClient from '../api/apiClient';
+import getAzureADToken from '../api/getAzureADToken';
 
 export const addCategory = createAsyncThunk(
   'addCategory/addCategory',
   async (categoryData: any, thunkAPI) => {
+    
+    const token = await getAzureADToken();
+
     try {
-      const response = await apiClient.post('/users', categoryData);
+      const response = await apiClient(token).post('/users', categoryData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue('Failed to add category');

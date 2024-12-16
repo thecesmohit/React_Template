@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useRef, useState } from 'react';
 
 // material-ui
@@ -30,6 +31,7 @@ import MessageOutlined from '@ant-design/icons/MessageOutlined';
 import SettingOutlined from '@ant-design/icons/SettingOutlined';
 import MainCard from '../components/MainCard';
 import "../../global.css";
+import ViewAllNotification from './ViewAllNotification';
 
 // sx styles
 const avatarSX = {
@@ -58,6 +60,7 @@ const Notification: React.FC<NotificationProps> = () => {
   const anchorRef = useRef<HTMLButtonElement | null>(null);
   const [read, setRead] = useState<number>(2);
   const [open, setOpen] = useState<boolean>(false);
+  const [openViewAll, setOpenViewAll] = useState<boolean>(false);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -70,169 +73,181 @@ const Notification: React.FC<NotificationProps> = () => {
     setOpen(false);
   };
 
+  const handleViewAllModal = () => {
+    setOpen(false);
+    setOpenViewAll(true);
+  }
+
+  const handleViewAllClose = () =>{
+    setOpenViewAll(false);
+  }
+
   const iconBackColorOpen = 'grey.100';
 
   return (
-    <Box sx={{ flexShrink: 0, ml: 0.75, }}>
-      <IconButton
-        color="secondary"
-        sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : 'transparent' }}
-        aria-label="open profile"
-        ref={anchorRef}
-        aria-controls={open ? 'profile-grow' : undefined}
-        aria-haspopup="true"
-        onClick={handleToggle}
-      >
-        <Badge badgeContent={read} color="primary">
-          <BellOutlined />
-        </Badge>
-      </IconButton>
-      <Popper
-        open={open}
-        placement={matchesXs ? 'bottom' : 'bottom-end'}
-        anchorEl={anchorRef.current}
-        role={undefined}
-        transition
-        disablePortal
-        sx={{p:2}}
-        popperOptions={{ modifiers: [{ name: 'offset', options: { offset: [matchesXs ? -5 : 0, 9] } }] }}
-      >
-        {(TransitionProps) => (
-          <Transitions type="grow" position={matchesXs ? 'top' : 'top-right'} in={open} {...TransitionProps}>
-            <Paper sx={{ boxShadow: theme.shadows[1],  width: '100%', minWidth: 285, maxWidth: { xs: 285, md: 420 } }}>
-              <ClickAwayListener onClickAway={handleClose}>
-                <MainCard
-                  title="Notification"
-                  elevation={0}
-                  border={false}
-                  content={false}
-                  secondary={
-                    <>
-                      {read > 0 && (
-                        <Tooltip title="Mark as all read">
-                          <IconButton color="success" size="small" onClick={() => setRead(0)}>
-                            <CheckCircleOutlined style={{ fontSize: '1.15rem' }} />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                    </>
-                  }
-                >
-                  <List
-                    component="nav"
-                    sx={{
-                      p: 0,
-                      '& .MuiListItemButton-root': {
-                        py: 0.5,
-                        '&.Mui-selected': { bgcolor: 'grey.50', color: 'text.primary' },
-                        '& .MuiAvatar-root': avatarSX,
-                        '& .MuiBox-root': { ...actionSX, position: 'relative' }
-                      }
-                    }}
+    <React.Fragment>
+      <Box sx={{ flexShrink: 0, ml: 0.75, }}>
+        <IconButton
+          color="secondary"
+          sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : 'transparent' }}
+          aria-label="open profile"
+          ref={anchorRef}
+          aria-controls={open ? 'profile-grow' : undefined}
+          aria-haspopup="true"
+          onClick={handleToggle}
+        >
+          <Badge badgeContent={read} color="primary">
+            <BellOutlined />
+          </Badge>
+        </IconButton>
+        <Popper
+          open={open}
+          placement={matchesXs ? 'bottom' : 'bottom-end'}
+          //anchorEl={anchorRef.current}
+          role={undefined}
+          transition
+          disablePortal
+          sx={{p:2}}
+          popperOptions={{ modifiers: [{ name: 'offset', options: { offset: [matchesXs ? -5 : 0, 9] } }] }}
+        >
+          {(TransitionProps) => (
+            <Transitions type="grow" position={matchesXs ? 'top' : 'top-right'} in={open} {...TransitionProps}>
+              <Paper sx={{ boxShadow: theme.shadows[1],  width: '100%', minWidth: 285, maxWidth: { xs: 285, md: 420 } }}>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MainCard
+                    title="Notification"
+                    elevation={0}
+                    border={false}
+                    content={false}
+                    secondary={
+                      <>
+                        {read > 0 && (
+                          <Tooltip title="Mark as all read">
+                            <IconButton color="success" size="small" onClick={() => setRead(0)}>
+                              <CheckCircleOutlined style={{ fontSize: '1.15rem' }} />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                      </>
+                    }
                   >
-                    <ListItemButton selected={read > 0}>
-                      <ListItemAvatar>
-                        <Avatar sx={{ color: 'success.main', bgcolor: 'success.lighter' }}>
-                          <GiftOutlined />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={
-                          <Typography variant="subtitle1">
-                            It&apos;s{' '}
-                            <Typography component="span" variant="subtitle1">
-                              Cristina danny&apos;s
-                            </Typography>{' '}
-                            birthday today.
-                          </Typography>
+                    <List
+                      component="nav"
+                      sx={{
+                        p: 0,
+                        '& .MuiListItemButton-root': {
+                          py: 0.5,
+                          '&.Mui-selected': { bgcolor: 'grey.50', color: 'text.primary' },
+                          '& .MuiAvatar-root': avatarSX,
+                          '& .MuiBox-root': { ...actionSX, position: 'relative' }
                         }
-                        secondary="2 min ago"
-                      />
-                      <Box sx={{ ml: 'auto' }}>$1</Box>
-                    </ListItemButton>
-                    <Divider />
-                    <ListItemButton>
-                      <ListItemAvatar>
-                        <Avatar sx={{ color: 'primary.main', bgcolor: 'primary.lighter' }}>
-                          <MessageOutlined />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={
-                          <Typography variant="subtitle1">
-                            <Typography component="span" variant="subtitle1">
-                              Aida Burg
-                            </Typography>{' '}
-                            commented your post.
-                          </Typography>
-                        }
-                        secondary="5 August"
-                      />
-                      <Box sx={{ ml: 'auto' }}>$1</Box>
-                    </ListItemButton>
-                    <Divider />
-                    <ListItemButton selected={read > 0}>
-                      <ListItemAvatar>
-                        <Avatar sx={{ color: 'error.main', bgcolor: 'error.lighter' }}>
-                          <SettingOutlined />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={
-                          <Typography variant="subtitle1">
-                            Your Profile is Complete &nbsp;
-                            <Typography component="span" variant="subtitle1">
-                              60%
-                            </Typography>{' '}
-                          </Typography>
-                        }
-                        secondary="7 hours ago"
-                      />
-                      <Box sx={{ ml: 'auto' }}>
-                        <Typography variant="caption" noWrap>
-                          2:45 PM
-                        </Typography>
-                      </Box>
-                    </ListItemButton>
-                    <Divider />
-                    <ListItemButton>
-                      <ListItemAvatar>
-                        <Avatar sx={{ color: 'primary.main', bgcolor: 'primary.lighter' }}>C</Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={
-                          <Typography variant="subtitle1">
-                            <Typography component="span" variant="subtitle1">
-                              Cristina Danny
-                            </Typography>{' '}
-                            invited to join{' '}
-                            <Typography component="span" variant="subtitle1">
-                              Meeting.
+                      }}
+                    >
+                      <ListItemButton selected={read > 0}>
+                        <ListItemAvatar>
+                          <Avatar sx={{ color: 'success.main', bgcolor: 'success.lighter' }}>
+                            <GiftOutlined />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1">
+                              It&apos;s{' '}
+                              <Typography component="span" variant="subtitle1">
+                                Cristina danny&apos;s
+                              </Typography>{' '}
+                              birthday today.
                             </Typography>
+                          }
+                          secondary="2 min ago"
+                        />
+                        <Box sx={{ ml: 'auto' }}>$1</Box>
+                      </ListItemButton>
+                      <Divider />
+                      <ListItemButton>
+                        <ListItemAvatar>
+                          <Avatar sx={{ color: 'primary.main', bgcolor: 'primary.lighter' }}>
+                            <MessageOutlined />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1">
+                              <Typography component="span" variant="subtitle1">
+                                Aida Burg
+                              </Typography>{' '}
+                              commented your post.
+                            </Typography>
+                          }
+                          secondary="5 August"
+                        />
+                        <Box sx={{ ml: 'auto' }}>$1</Box>
+                      </ListItemButton>
+                      <Divider />
+                      <ListItemButton selected={read > 0}>
+                        <ListItemAvatar>
+                          <Avatar sx={{ color: 'error.main', bgcolor: 'error.lighter' }}>
+                            <SettingOutlined />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1">
+                              Your Profile is Complete &nbsp;
+                              <Typography component="span" variant="subtitle1">
+                                60%
+                              </Typography>{' '}
+                            </Typography>
+                          }
+                          secondary="7 hours ago"
+                        />
+                        <Box sx={{ ml: 'auto' }}>
+                          <Typography variant="caption" noWrap>
+                            2:45 PM
                           </Typography>
-                        }
-                        secondary="Daily scrum meeting time"
-                      />
-                      
-                    </ListItemButton>
-                    <Divider />
-                    <ListItemButton sx={{ textAlign: 'center', py: `${12}px !important` }}>
-                      <ListItemText
-                        primary={
-                          <Typography variant="subtitle1" color="primary">
-                            View All
-                          </Typography>
-                        }
-                      />
-                    </ListItemButton>
-                  </List>
-                </MainCard>
-              </ClickAwayListener>
-            </Paper>
-          </Transitions>
-        )}
-      </Popper>
-    </Box>
+                        </Box>
+                      </ListItemButton>
+                      <Divider />
+                      <ListItemButton>
+                        <ListItemAvatar>
+                          <Avatar sx={{ color: 'primary.main', bgcolor: 'primary.lighter' }}>C</Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1">
+                              <Typography component="span" variant="subtitle1">
+                                Cristina Danny
+                              </Typography>{' '}
+                              invited to join{' '}
+                              <Typography component="span" variant="subtitle1">
+                                Meeting.
+                              </Typography>
+                            </Typography>
+                          }
+                          secondary="Daily scrum meeting time"
+                        />
+                        
+                      </ListItemButton>
+                      <Divider />
+                      <ListItemButton sx={{ textAlign: 'center', py: `${12}px !important` }} onClick={handleViewAllModal}>
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1" color="primary">
+                              View All
+                            </Typography>
+                          }
+                        />
+                      </ListItemButton>
+                    </List>
+                  </MainCard>
+                </ClickAwayListener>
+              </Paper>
+            </Transitions>
+          )}
+        </Popper>
+      </Box>
+      <ViewAllNotification isOpen={openViewAll} handleClose={handleViewAllClose} open/>
+    </React.Fragment>
   );
 };
 

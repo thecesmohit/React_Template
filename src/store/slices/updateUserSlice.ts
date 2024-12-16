@@ -1,10 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import apiClient from '../api/apiClient';
+import { instance } from '../..';
+import { loginRequest } from '../../auth-config';
+import getAzureADToken from '../api/getAzureADToken';
 
 
 export const updateUser = createAsyncThunk('users/updateUser', async (userData: any, { rejectWithValue }) => {
+  
+  const token = getAzureADToken();
+
   try {
-    const response = await apiClient.put(`users/${userData.id}`, userData);
+    const response = await apiClient(token).put(`users/${userData.id}`, userData);
     return response.data;
   } catch (error) {
     return rejectWithValue('Failed to update user');
