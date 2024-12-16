@@ -5,7 +5,7 @@ import getAzureADToken from '../api/getAzureADToken';
 
 export const deleteUser = createAsyncThunk('users/deleteUser', async (userId: number, { rejectWithValue }) => {
   
-  const token = getAzureADToken();
+  const token = await getAzureADToken();
 
   try {
     const response = await apiClient(token).delete(`Users/${userId}`)

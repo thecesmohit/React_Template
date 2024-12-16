@@ -20,11 +20,7 @@ const bull = (
 export default function BasicCard(props: any) {
 
   const {resetBoundary} = useErrorBoundary();
-
-  React.useEffect(() => {
-    throw new Error("Something went wrong");
-  }, []);
-
+ 
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>

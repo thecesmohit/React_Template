@@ -4,7 +4,8 @@ import { MuiButton } from "../../common/button/MuiButton";
 import "../../global.css";
 import CustomeMuiDialog from "../../common/dialog/CustomeMuiDialog";
 import { FallbackProps } from "react-error-boundary";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+
 
 export default function ErrorPage({error, resetErrorBoundary} : FallbackProps){ 
 
@@ -17,6 +18,7 @@ export default function ErrorPage({error, resetErrorBoundary} : FallbackProps){
 
     return(
         <React.Fragment>
+<<<<<<< HEAD
             <Dialog
                 fullScreen
                 open={true}
@@ -48,6 +50,22 @@ export default function ErrorPage({error, resetErrorBoundary} : FallbackProps){
                     </MuiButton>
                 </DialogActions>
             </Dialog> 
+=======
+           <Container style={{ textAlign: 'center' }}>
+        <Typography variant="h3" color="error" gutterBottom>
+          404
+        </Typography>
+        <Typography variant="h5" gutterBottom>
+          Oops! The page you are looking for does not exist.
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          It might have been removed or the URL might be incorrect.
+        </Typography>
+        <Button variant="contained" color="primary" onClick={handleNavigate}>
+          Go to Homepage
+        </Button>
+      </Container>
+>>>>>>> b4a6e7e4120465bbcc73bb39bdedc805a4611860
         </React.Fragment>
     );
 }

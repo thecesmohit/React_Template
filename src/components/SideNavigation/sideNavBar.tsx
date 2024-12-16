@@ -12,12 +12,11 @@ import { Button, CssBaseline } from '@mui/material';
 import BasicCard from '../ErrorPage/BaiscCard';
 import { Outlet } from 'react-router';
 import { useNavigate } from 'react-router';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
 import { darkTheme, lightTheme, naturalTheme } from '../../common/theme/MuiAppTheme';
 import { ThemeProvider } from '@mui/system';
 import { useMsal } from '@azure/msal-react';
-
 
 
 const NAVIGATION: Navigation = [
@@ -94,6 +93,8 @@ export default function DashboardLayoutBasic(props: any) {
   
   const navigate = useNavigate();
   const { instance } = useMsal();
+  const dispatch = useDispatch<AppDispatch>();
+
   const { window } = props;
   const router = useDemoRouter('/dashboard');
   
@@ -112,9 +113,9 @@ export default function DashboardLayoutBasic(props: any) {
       signIn: () => {
         setSession({
           user: {
-            name: 'Mohit Raut',
-            email: 'mohit.raut@outlook.com',
-            image: 'https://avatars.githubusercontent.com/u/19550456',
+            name: 'Vaibhav Mahajan',
+      email: 'vaibhavmahajan@outlook.com',
+      image: 'https://avatars.githubusercontent.com/u/19550456',
           },
         });
       },

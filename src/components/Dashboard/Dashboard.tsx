@@ -145,6 +145,9 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
 
    const columnDefs: ColDef[] = [
     { headerName: 'ID', field: 'id', checkboxSelection: true },

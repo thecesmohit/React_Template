@@ -5,6 +5,7 @@ import { loginRequest } from "../../auth-config";
 
 export default async function getAzureADToken(){
 
+    
     try{
         const tokenResponse = await instance.acquireTokenSilent(loginRequest);
         const azureADToken = tokenResponse.accessToken;
@@ -19,5 +20,5 @@ export default async function getAzureADToken(){
         }
       }
 
-    return null;
+    //return null;
 }

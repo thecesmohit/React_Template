@@ -9,9 +9,8 @@ export const getUsers = createAsyncThunk(
   async (_, thunkAPI) => {
     
     const token = await getAzureADToken();
-    // const tokenResponse = await instance.acquireTokenSilent(loginRequest);
-    //     const token = tokenResponse.accessToken;
     console.log("token after", token);
+    
     try {
       console.log("thunk call",apiClient);
       const response = await apiClient(token).get('/Users');

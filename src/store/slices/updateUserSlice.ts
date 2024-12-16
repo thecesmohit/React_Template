@@ -7,7 +7,7 @@ import getAzureADToken from '../api/getAzureADToken';
 
 export const updateUser = createAsyncThunk('users/updateUser', async (userData: any, { rejectWithValue }) => {
   
-  const token = getAzureADToken();
+  const token = await getAzureADToken();
 
   try {
     const response = await apiClient(token).put(`users/${userData.id}`, userData);

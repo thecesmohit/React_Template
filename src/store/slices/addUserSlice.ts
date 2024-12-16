@@ -6,7 +6,7 @@ export const addUser = createAsyncThunk(
   'addUser/addUser',
   async (addUserData: any, thunkAPI) => {
     
-    const token = getAzureADToken();
+    const token = await getAzureADToken();
 
     try {
       const response = await apiClient(token).post('/users', addUserData);

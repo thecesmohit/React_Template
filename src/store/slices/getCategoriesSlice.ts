@@ -6,7 +6,7 @@ export const getCategories = createAsyncThunk(
   'getCategories/getCategories',
   async (_, thunkAPI) => {
 
-    const token = getAzureADToken();
+    const token = await getAzureADToken();
 
     try {
       console.log("thunk call",apiClient);
