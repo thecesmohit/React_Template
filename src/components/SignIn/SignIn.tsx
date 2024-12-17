@@ -19,7 +19,6 @@ import { AppDispatch, RootState } from '../../store/store';
 import ForgotPassword from './ForgotPassword';
 import CustomizedSnackbar from '../../common/snackbar/CustomizedSnackbar';
 import { login } from '../../store/slices/authSlice';
-import { useAuth0 } from '@auth0/auth0-react';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -74,7 +73,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const { token, loading, error } = useSelector((state: RootState) => state.auth);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const { loginWithRedirect } = useAuth0(); // Auth0 hook
+  //const { loginWithRedirect } = useAuth0(); // Auth0 hook
 
   useEffect(() => {
     // Redirect if login is successful
@@ -88,9 +87,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     if (login.rejected.match(action)) {
       setOpenCustomeSnackbar(true);
     }
-  };
-  const handleAuth0Login = () => {
-    loginWithRedirect();
   };
   const handleClickOpen = () => {
     setOpen(true);

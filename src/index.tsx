@@ -17,6 +17,16 @@ import { MsalProvider } from '@azure/msal-react';
 //MSAL should instantiated outside of component tree so that at time of rerendering it will not re-instantiated
 export const instance = new PublicClientApplication(msalConfig);
 
+// instance.handleRedirectPromise()
+//   .then((response) => {
+//     if (response) {
+//       console.log("Token acquired:", response.accessToken);
+//     }
+//   })
+//   .catch((error) => {
+//     console.error("Error handling redirect promise:", error);
+//   });
+
 if(!instance.getActiveAccount() && instance.getAllAccounts.length>0){
   instance.setActiveAccount(instance.getAllAccounts()[0]);
 }
@@ -36,19 +46,17 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-
+console.log("Instance", instance);
 root.render(
 
   <React.StrictMode>
-    <MsalProvider instance={instance}>
-      <Provider store={store}>
-        {/* <MuiAppTheme> */}
-          <BrowserRouter>
-            <App/>
-          </BrowserRouter>
-        {/* </MuiAppTheme> */}
-      </Provider>
-    </MsalProvider>
+      <MsalProvider instance={instance}>
+        <Provider store={store}>
+          {/* <MuiAppTheme> */}
+              <App/>
+          {/* </MuiAppTheme> */}
+        </Provider>
+      </MsalProvider>
   </React.StrictMode>
   
 );

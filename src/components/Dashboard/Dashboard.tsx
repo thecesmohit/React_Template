@@ -3,7 +3,6 @@ import CommonGrid from '../CommonGrid/CommonGrid';
 import { ColDef } from 'ag-grid-community';
 import { Grid, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, Snackbar, FormControl, FormLabel, Typography, Divider, Stack, Box } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../store/slices/addUserSlice';
 import { AppDispatch, RootState } from '../../store/store';
@@ -11,9 +10,11 @@ import { getUsers } from '../../store/slices/getUserSlice';
 import { deleteUser } from '../../store/slices/deleteUserSlice';
 import { updateUser } from '../../store/slices/updateUserSlice';
 import CustomeYNDialog from '../../common/dialog/CustomeYNDialog';
+import { useMsal } from '@azure/msal-react';
 
 const Dashboard: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { instance } = useMsal();
   const { users, loading, error } = useSelector((state: RootState) => state.getUsers);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentRow, setCurrentRow] = useState<any | null>(null);
@@ -145,9 +146,6 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
-  useEffect(() => {
-    dispatch(getUsers());
-  }, []);
 
    const columnDefs: ColDef[] = [
     { headerName: 'ID', field: 'id', checkboxSelection: true },
