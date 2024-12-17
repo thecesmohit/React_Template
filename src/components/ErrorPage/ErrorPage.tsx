@@ -2,7 +2,6 @@ import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentT
 import React from "react"
 import { MuiButton } from "../../common/button/MuiButton";
 import "../../global.css";
-import CustomeMuiDialog from "../../common/dialog/CustomeMuiDialog";
 import { FallbackProps } from "react-error-boundary";
 import { useNavigate } from "react-router-dom";
 import './ErrorPage.css';

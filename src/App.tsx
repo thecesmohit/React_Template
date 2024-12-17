@@ -1,13 +1,13 @@
 import './App.css';
 //import DashboardLayoutBasic from './components/SideNavigation/SideNavBar';
 import RouteErrorPage from './components/ErrorPage/RouteErrorPage';
-import { Route, Routes } from 'react-router';
+import { BrowserRouter, Route, Routes } from 'react-router';
 import BasicCard from './components/ErrorPage/BaiscCard';
 import Dashboard from './components/Dashboard/Dashboard';
 import SignIn from './components/SignIn/SignIn';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorPage from './components/ErrorPage/ErrorPage';
-
+import DashboardLayoutBasic from './components/SideNavigation/SideNavBar';
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 import { loginRequest } from './auth-config';
 import { useEffect } from 'react';
@@ -20,7 +20,7 @@ function App() {
   const activeAccount = instance.getActiveAccount();
 
   return (
-    <>
+    <BrowserRouter>
       <AuthenticatedTemplate>
         {
           activeAccount ?
@@ -45,8 +45,7 @@ function App() {
       <UnauthenticatedTemplate>
         <LoginRedirectComponent/>
       </UnauthenticatedTemplate>
-    </>
-    
+    </BrowserRouter>
   );
 }
 
@@ -56,12 +55,14 @@ export const LoginRedirectComponent = () => {
   const { instance } = useMsal();
 
   useEffect(() => {
-    instance
-      .loginRedirect({
-        ...loginRequest,
-        prompt: "select_account", // Replace 'created' with a valid value
-      })
-      .catch((error) => console.log("Login error:", error));
+    if (!instance.getActiveAccount()) {
+      instance
+        .loginRedirect({
+          ...loginRequest,
+          prompt: "select_account", // Replace 'created' with a valid value
+        })
+        .catch((error) => console.log("Login redirect error:", error));
+    }
   }, [instance]);
 
   return (

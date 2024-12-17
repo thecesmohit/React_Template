@@ -73,13 +73,14 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const { token, loading, error } = useSelector((state: RootState) => state.auth);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  //const { loginWithRedirect } = useAuth0(); // Auth0 hook
 
-  // useEffect(() => {
-  //   // Redirect if login is successful
-  //   if (token) {
-  //     navigate('/');
-  //   }
-  // }, [token, navigate]);
+  useEffect(() => {
+    // Redirect if login is successful
+    if (token) {
+      navigate('/');
+    }
+  }, [token, navigate]);
 
   const handleLogin = async () => {
     const action = await dispatch(login({ username, password }));
@@ -87,7 +88,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       setOpenCustomeSnackbar(true);
     }
   };
-  
   const handleClickOpen = () => {
     setOpen(true);
   };
