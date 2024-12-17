@@ -7,10 +7,11 @@ import Dashboard from './components/Dashboard/Dashboard';
 import SignIn from './components/SignIn/SignIn';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorPage from './components/ErrorPage/ErrorPage';
-import DashboardLayoutBasic from './components/SideNavigation/SideNavBar';
+
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 import { loginRequest } from './auth-config';
 import { useEffect } from 'react';
+import DashboardLayoutBasic from './components/SideNavigation/sideNavBar';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
         <LoginRedirectComponent/>
       </UnauthenticatedTemplate>
     </>
+    
   );
 }
 

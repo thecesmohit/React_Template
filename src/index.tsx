@@ -40,7 +40,7 @@ const root = ReactDOM.createRoot(
 root.render(
 
   <React.StrictMode>
-    <MsalProvider instance={instance}>
+    {/* <MsalProvider instance={instance}> */}
       <Provider store={store}>
         {/* <MuiAppTheme> */}
           <BrowserRouter>
@@ -48,7 +48,7 @@ root.render(
           </BrowserRouter>
         {/* </MuiAppTheme> */}
       </Provider>
-    </MsalProvider>
+    {/* </MsalProvider> */}
   </React.StrictMode>
   
 );

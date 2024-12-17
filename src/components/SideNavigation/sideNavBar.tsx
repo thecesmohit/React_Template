@@ -18,7 +18,6 @@ import { darkTheme, lightTheme, naturalTheme } from '../../common/theme/MuiAppTh
 import { ThemeProvider } from '@mui/system';
 import { useMsal } from '@azure/msal-react';
 
-
 const NAVIGATION: Navigation = [
 //   {
 //     kind: 'header',
@@ -55,6 +54,7 @@ const NAVIGATION: Navigation = [
       },
     ],
   },
+  
 ];
 
 const demoTheme = extendTheme({

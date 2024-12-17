@@ -1,0 +1,27 @@
+#ErrorTitle
+{
+    color: red;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+#ErrorBox
+{
+    border: 1;
+    height: 300px;
+    border-radius: 15px;
+    background-color:whitesmoke;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+#ErrorboxInner > *
+{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.ErrorPageTable { display: table; border: 1px;}
+.ErrorPageTableRow { display: table-row; }
+.ErrorPageTableCell { display: table-cell;line-height: 2.5; }
+.ErrorPageTableCell_Header{ display: table-cell; font-weight: bold;line-height: 2.5;}
