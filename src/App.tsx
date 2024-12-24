@@ -1,48 +1,48 @@
 import './App.css';
-//import DashboardLayoutBasic from './components/SideNavigation/SideNavBar';
 import RouteErrorPage from './components/ErrorPage/RouteErrorPage';
-import { BrowserRouter, Route, Routes } from 'react-router';
 import BasicCard from './components/ErrorPage/BaiscCard';
 import Dashboard from './components/Dashboard/Dashboard';
 import SignIn from './components/SignIn/SignIn';
-import { ErrorBoundary } from 'react-error-boundary';
 import ErrorPage from './components/ErrorPage/ErrorPage';
+import DashboardLayoutBasic from './components/SideNavigation/sideNavBar';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Updated import
+import { ErrorBoundary } from 'react-error-boundary';
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 import { loginRequest } from './auth-config';
 import { useEffect } from 'react';
-import DashboardLayoutBasic from './components/SideNavigation/sideNavBar';
-
 
 function App() {
-  
-  const {instance} = useMsal();
+  const { instance } = useMsal();
   const activeAccount = instance.getActiveAccount();
 
   return (
     <BrowserRouter>
       <AuthenticatedTemplate>
-        {
-          activeAccount ?
+        {activeAccount ? (
           <ErrorBoundary
             FallbackComponent={ErrorPage}
             onReset={() => {
-              // reset the state of your app here
             }}
-            resetKeys={['someKey']}
+            resetKeys={['someKey']} // Update 'someKey' based on your reset logic
           >
             <Routes>
-              <Route path='/' element={<DashboardLayoutBasic/>} errorElement={<RouteErrorPage/>}>
-                <Route path='/' element={<Dashboard/>} errorElement={<RouteErrorPage/>}/>
-                <Route path='/card' element={<BasicCard/>} errorElement={<RouteErrorPage/>}/>
+              <Route
+                path="/"
+                element={<DashboardLayoutBasic />}
+                errorElement={<RouteErrorPage/>}
+              >
+                <Route index element={<Dashboard />} />
+                <Route path="card" element={<BasicCard />} />
+                <Route path="*" element={<RouteErrorPage />} />
               </Route>
-              <Route path='/signIn' element={<SignIn/>}/>
+              <Route path="/signIn" element={<SignIn />} />
             </Routes>
-          </ErrorBoundary> :
-          null
-        }
+          </ErrorBoundary>
+        ) : null}
       </AuthenticatedTemplate>
+
       <UnauthenticatedTemplate>
-        <LoginRedirectComponent/>
+        <LoginRedirectComponent />
       </UnauthenticatedTemplate>
     </BrowserRouter>
   );
@@ -50,6 +50,7 @@ function App() {
 
 export default App;
 
+// LoginRedirectComponent handles redirection for unauthenticated users
 export const LoginRedirectComponent = () => {
   const { instance } = useMsal();
 
@@ -58,13 +59,11 @@ export const LoginRedirectComponent = () => {
       instance
         .loginRedirect({
           ...loginRequest,
-          prompt: "select_account", // Replace 'created' with a valid value
+          prompt: 'select_account', // Ensures the account selection prompt appears
         })
-        .catch((error) => console.log("Login redirect error:", error));
+        .catch((error) => console.log('Login redirect error:', error));
     }
   }, [instance]);
 
-  return (
-      <div>Redirecting to login...</div>
-  );
+  return <div>Redirecting to login...</div>;
 };

@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import  store  from './store/store'
 import { Provider } from 'react-redux'
-import { ErrorBoundary } from 'react-error-boundary';
-import ErrorPage from './components/ErrorPage/RouteErrorPage';
-import MuiAppTheme from './common/theme/MuiAppTheme';
 import { EventType, PublicClientApplication, AuthenticationResult} from '@azure/msal-browser';
 import { msalConfig } from './auth-config';
 import { MsalProvider } from '@azure/msal-react';
+import { ThemeContextProvider } from './components/SideNavigation/themeContext';
 
 
 //MSAL should instantiated outside of component tree so that at time of rerendering it will not re-instantiated
@@ -50,13 +47,15 @@ console.log("Instance", instance);
 root.render(
 
   <React.StrictMode>
+    
       <MsalProvider instance={instance}>
         <Provider store={store}>
-          {/* <MuiAppTheme> */}
+        <ThemeContextProvider>
               <App/>
-          {/* </MuiAppTheme> */}
+              </ThemeContextProvider>
         </Provider>
       </MsalProvider>
+      
   </React.StrictMode>
   
 );

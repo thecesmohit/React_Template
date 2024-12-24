@@ -71,13 +71,9 @@ export default function ErrorPage({error, resetErrorBoundary} : FallbackProps){
           <div className="ErrorPageTable">
             <div className="ErrorPageTableRow">
               <div className="ErrorPageTableCell_Header">Error</div>
-              <div className="ErrorPageTableCell">{error.Stack}</div>
-            </div>
-            <div className="ErrorPageTableRow">
-              <div className="ErrorPageTableCell_Header">Description</div>
               <div className="ErrorPageTableCell">{error.message}</div>
             </div>
-            <div className="ErrorPageTableRow">
+                       <div className="ErrorPageTableRow">
               <div className="ErrorPageTableCell_Header">Possible Solution&nbsp;&nbsp;&nbsp;&nbsp;</div>
               <div className="ErrorPageTableCell">Please check the URL or reach out to the application Support.</div>
               
